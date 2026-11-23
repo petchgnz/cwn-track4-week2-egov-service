@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>ผู้ดูแลระบบ</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<script type="text/x-dc-template">
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0;background:#F3F5F7}
+*{box-sizing:border-box}
+a{color:#0B5CAD}a:hover{color:#08457F}
+.mono{font-family:'IBM Plex Mono',monospace}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:8px;font:600 15px/1 'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn-primary{background:#0B5CAD;color:#fff}
+.btn-secondary{background:#fff;color:#0B5CAD;border-color:#B9CCE0}
+.btn-danger-text{background:transparent;color:#A1261D;padding:0 10px}
+.btn-sm{min-height:40px;padding:0 14px;font-size:14px}
+.label{font:600 14px/1.4 'IBM Plex Sans Thai',sans-serif;color:#3D4853}
+.input{height:44px;border:1px solid #8E9AA6;border-radius:8px;padding:0 12px;font:500 15px/1 'IBM Plex Sans Thai',sans-serif;color:#13202B;background:#fff;width:100%}
+.input-err{border:2px solid #A1261D}
+.muted{color:#56616C;font-size:14px}
+.err{font-size:14px;line-height:1.5;color:#A1261D;font-weight:500;margin:0}
+.tabbar{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid #DCE2E8}
+.tab{min-height:48px;padding:0 18px;border:0;border-bottom:3px solid transparent;background:transparent;font:600 15px/1 'IBM Plex Sans Thai',sans-serif;color:#3D4853;cursor:pointer}
+.tab-on{color:#0B5CAD;border-bottom-color:#0B5CAD}
+.t{width:100%;border-collapse:collapse;font-size:15px;min-width:760px}
+.t th{text-align:left;font-weight:600;font-size:13px;color:#56616C;padding:12px 16px;border-bottom:1px solid #DCE2E8;background:#F7F9FA;white-space:nowrap}
+.t td{padding:14px 16px;border-bottom:1px solid #EDF0F3;vertical-align:top}
+.t tr:last-child td{border-bottom:0}
+.ok{display:flex;gap:10px;align-items:center;padding:12px 16px;border-radius:10px;background:#E4F3E7;color:#1D6430;font-weight:600;font-size:15px}
+.svc{background:#FFFFFF;border:1px solid #DCE2E8;border-radius:14px;padding:20px;display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end}
+.nav a{font-size:15px;font-weight:500;color:#3D4853;text-decoration:none;padding:10px 4px;border-bottom:3px solid transparent}
+.nav a.on{color:#0B5CAD;border-bottom-color:#0B5CAD}
+</style>
+</helmet>
+<div style="min-height: 1300px; background: #F3F5F7; font-family: 'IBM Plex Sans Thai', sans-serif; color: #13202B">
+  <header style="background: #FFFFFF; border-bottom: 1px solid #DCE2E8">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 10px 24px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px">
+      <a href="Main.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #13202B; padding-bottom: 10px">
+        <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#0B5CAD"></circle><path d="M11 17h18M12 28h16M13 17v9M18 17v9M22 17v9M27 17v9M10 31h20M20 9l10 6H10z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+        <span style="display: flex; flex-direction: column; line-height: 1.25"><strong style="font-size: 17px">e-Service กลาง</strong><span style="font-size: 13px; color: #56616C">ผู้ดูแลระบบ</span></span>
+      </a>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 16px; padding-bottom: 10px">
+        <span data-testid="user-name" data-role="admin" style="font-size: 15px; font-weight: 600">ผู้ดูแลระบบ</span>
+        <a href="Main.html" style="font-size: 15px">ออกจากระบบ</a>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 56px; display: flex; flex-direction: column; gap: 20px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <h1 style="margin: 0; font-size: 28px">ตั้งค่าระบบ</h1>
+      <p class="muted" style="margin: 0; font-size: 15px">ทุกการเปลี่ยนแปลงบันทึกใน Audit Trail · ผู้ดูแลระบบทำรายการคำขอและแก้ Audit ไม่ได้</p>
+    </div>
+
+    <div class="tabbar" aria-label="หมวดการตั้งค่า">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+        <button type="button" class="{{t.cls}}" aria-pressed="{{t.pressed}}" onClick="{{t.pick}}">{{t.label}}</button>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{isServices}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div class="ok" data-testid="action-success" role="status"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>บันทึกขอหนังสือรับรองแล้ว · ฿20 → ฿25 มีผลกับคำขอใหม่เท่านั้น</div>
+
+        <div class="svc" data-testid="service-row" data-service-id="SV-01">
+          <div style="flex: 1 1 260px"><div style="font-size: 17px; font-weight: 700">ขอหนังสือรับรอง</div><div class="muted"><span class="mono">SV-01</span> · ฝ่ายทะเบียน → ออกเอกสาร</div></div>
+          <div style="display: flex; flex-direction: column; gap: 6px; width: 180px"><label class="label" for="fee1">ค่าธรรมเนียม ต่อฉบับ (บาท)</label><input id="fee1" class="input" type="number" value="25" data-testid="svc-fee-SV-01"></div>
+          <div style="display: flex; flex-direction: column; gap: 6px; width: 140px"><label class="label" for="sla1">SLA (วันทำการ)</label><input id="sla1" class="input" type="number" value="3" data-testid="svc-sla-SV-01"></div>
+          <button type="button" class="btn btn-primary" data-testid="svc-save-SV-01">บันทึก</button>
+        </div>
+
+        <div class="svc" data-testid="service-row" data-service-id="SV-02">
+          <div style="flex: 1 1 260px"><div style="font-size: 17px; font-weight: 700">ขออนุญาตประกอบกิจการ</div><div class="muted"><span class="mono">SV-02</span> · ทะเบียน → หัวหน้าฝ่าย</div></div>
+          <div style="display: flex; flex-direction: column; gap: 6px; width: 180px"><label class="label" for="fee2">ค่าธรรมเนียม (บาท)</label><input id="fee2" class="input" type="number" value="500" data-testid="svc-fee-SV-02"></div>
+          <div style="display: flex; flex-direction: column; gap: 6px; width: 140px"><label class="label" for="sla2">SLA (วันทำการ)</label><input id="sla2" class="input input-err" type="number" value="61" data-testid="svc-sla-SV-02"></div>
+          <button type="button" class="btn btn-primary" data-testid="svc-save-SV-02">บันทึก</button>
+          <p class="err" data-testid="action-error" style="flex-basis: 100%">SLA ต้องเป็นจำนวนเต็ม 1–60 วันทำการ</p>
+        </div>
+
+        <div class="svc" data-testid="service-row" data-service-id="SV-03">
+          <div style="flex: 1 1 260px"><div style="font-size: 17px; font-weight: 700">ขออนุญาตก่อสร้าง/ต่อเติมอาคาร</div><div class="muted"><span class="mono">SV-03</span> · ทะเบียน → โยธา → หัวหน้าฝ่าย</div></div>
+          <div style="display: flex; flex-direction: column; gap: 6px; width: 180px"><label class="label" for="fee3">ฐาน 1–100 ตร.ม. (บาท)</label><input id="fee3" class="input" type="number" value="1000" data-testid="svc-fee-SV-03"></div>
+          <div style="display: flex; flex-direction: column; gap: 6px; width: 180px"><label class="label" for="fee3b">ส่วนเกิน ต่อ ตร.ม. (บาท)</label><input id="fee3b" class="input" type="number" value="10" data-testid="svc-fee-per-sqm-SV-03"></div>
+          <div style="display: flex; flex-direction: column; gap: 6px; width: 140px"><label class="label" for="sla3">SLA (วันทำการ)</label><input id="sla3" class="input" type="number" value="15" data-testid="svc-sla-SV-03"></div>
+          <button type="button" class="btn btn-primary" data-testid="svc-save-SV-03">บันทึก</button>
+        </div>
+        <p class="muted" style="margin: 0">ค่าธรรมเนียม 0–100,000 บาท · SLA 1–60 วันทำการ · ยอดของคำขอที่รอชำระอยู่แล้วไม่เปลี่ยน</p>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isHolidays}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <form style="background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 14px; padding: 18px; display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end">
+          <div style="display: flex; flex-direction: column; gap: 6px; width: 200px"><label class="label" for="hd">วันที่</label><input id="hd" class="input" type="date" value="2026-12-02" data-testid="holiday-date-input"></div>
+          <div style="display: flex; flex-direction: column; gap: 6px; flex: 1 1 260px"><label class="label" for="hn">ชื่อวันหยุด</label><input id="hn" class="input" value="วันหยุดพิเศษทดสอบ" data-testid="holiday-name-input"></div>
+          <button type="button" class="btn btn-primary" data-testid="holiday-add-btn">เพิ่มวันหยุด</button>
+        </form>
+        <p class="muted" style="margin: 0">วันหยุดใหม่มีผลกับคำขอที่ชำระหลังจากนี้ · กำหนดเสร็จของคำขอเดิมไม่คำนวณใหม่</p>
+        <div style="background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 14px; overflow-x: auto">
+          <table class="t">
+            <thead><tr><th scope="col">วันที่</th><th scope="col">วัน</th><th scope="col">ชื่อ</th><th scope="col"><span style="position: absolute; left: -9999px">ลบ</span></th></tr></thead>
+            <tbody>
+              <sc-for list="{{holidays}}" as="h" hint-placeholder-count="4">
+                <tr data-testid="holiday-row" data-date="{{h.iso}}"><td style="font-weight: 600">{{h.date}}</td><td class="muted">{{h.dow}}</td><td>{{h.name}}</td><td style="text-align: right"><button type="button" class="btn btn-danger-text btn-sm" data-testid="holiday-delete-btn">ลบ</button></td></tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isUsers}}" hint-placeholder-val="{{ false }}">
+      <div style="background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 14px; overflow-x: auto">
+        <table class="t">
+          <thead><tr><th scope="col">ผู้ใช้</th><th scope="col">ชื่อแสดง</th><th scope="col">บทบาท</th><th scope="col">แผนก</th><th scope="col"><span style="position: absolute; left: -9999px">บันทึก</span></th></tr></thead>
+          <tbody>
+            <sc-for list="{{users}}" as="u" hint-placeholder-count="7">
+              <tr data-testid="user-row" data-username="{{u.username}}">
+                <td class="mono">{{u.username}}</td>
+                <td>{{u.name}}</td>
+                <td><label style="position: absolute; left: -9999px" for="r-{{u.username}}">บทบาทของ {{u.username}}</label><select id="r-{{u.username}}" class="input" style="width: 160px" data-testid="user-role-select" disabled="{{u.self}}"><option selected>{{u.role}}</option><option>citizen</option><option>officer</option><option>head</option><option>executive</option><option>auditor</option><option>admin</option></select></td>
+                <td><label style="position: absolute; left: -9999px" for="d-{{u.username}}">แผนกของ {{u.username}}</label><select id="d-{{u.username}}" class="input" style="width: 140px" data-testid="user-dept-select"><option selected>{{u.dept}}</option><option>registry</option><option>works</option><option value="">–</option></select></td>
+                <td style="text-align: right"><sc-if value="{{u.notSelf}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn btn-secondary btn-sm" data-testid="user-save-btn">บันทึก</button></sc-if><sc-if value="{{u.self}}" hint-placeholder-val="{{ false }}"><span class="muted">บัญชีของคุณ</span></sc-if></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </sc-if>
+  </main>
+</div>
+</script>
+<script type="text/x-dc" data-dc-script data-props='{"startTab":{"editor":"enum","options":["services","holidays","users"],"default":"services","section":"ตัวอย่าง"},"$preview":{"width":1280,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const tab = s.tab ?? (this.props.startTab ?? 'services');
+    const defs = [['services', 'บริการและค่าธรรมเนียม'], ['holidays', 'วันหยุด'], ['users', 'ผู้ใช้และบทบาท']];
+    const tabs = defs.map((d) => ({ label: d[1], cls: d[0] === tab ? 'tab tab-on' : 'tab', pressed: String(d[0] === tab), pick: () => this.setState({ tab: d[0] }) }));
+    const holidays = [
+      { iso: '2026-12-07', date: '7 ธ.ค. 2569', dow: 'จันทร์', name: 'ชดเชยวันหยุดทดสอบ (สมมติ)' },
+      { iso: '2026-12-10', date: '10 ธ.ค. 2569', dow: 'พฤหัสบดี', name: 'วันรัฐธรรมนูญทดสอบ (สมมติ)' },
+      { iso: '2026-12-31', date: '31 ธ.ค. 2569', dow: 'พฤหัสบดี', name: 'วันสิ้นปีทดสอบ (สมมติ)' },
+      { iso: '2027-01-01', date: '1 ม.ค. 2570', dow: 'ศุกร์', name: 'วันขึ้นปีใหม่ทดสอบ (สมมติ)' }
+    ];
+    const users = [
+      ['off.reg1', 'เจ้าหน้าที่ทะเบียน 1', 'officer', 'registry'],
+      ['off.reg2', 'เจ้าหน้าที่ทะเบียน 2', 'officer', 'registry'],
+      ['off.works1', 'เจ้าหน้าที่โยธา 1', 'officer', 'works'],
+      ['head1', 'หัวหน้าฝ่าย', 'head', '–'],
+      ['exec1', 'ผู้บริหาร', 'executive', '–'],
+      ['audit1', 'ผู้ตรวจสอบภายใน', 'auditor', '–'],
+      ['admin1', 'ผู้ดูแลระบบ', 'admin', '–']
+    ].map((u) => ({ username: u[0], name: u[1], role: u[2], dept: u[3], self: u[0] === 'admin1', notSelf: u[0] !== 'admin1' }));
+    return { tabs, isServices: tab === 'services', isHolidays: tab === 'holidays', isUsers: tab === 'users', holidays, users };
+  }
+}
+</script>
+</body>
+</html>

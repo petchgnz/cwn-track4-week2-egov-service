@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>ตรวจสอบเอกสาร</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0;background:#F3F5F7}
+*{box-sizing:border-box}
+a{color:#0B5CAD}a:hover{color:#08457F}
+.mono{font-family:'IBM Plex Mono',monospace}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:8px;font:600 16px/1 'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn-primary{background:#0B5CAD;color:#fff}
+.input{flex:1 1 220px;height:48px;border:1px solid #8E9AA6;border-radius:8px;padding:0 14px;font:600 18px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#13202B;background:#fff;text-transform:uppercase}
+.muted{color:#56616C;font-size:14px}
+.res{border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:20px;border:2px solid}
+.res-VALID{background:#F2FAF4;border-color:#3E8E55}
+.res-EXPIRED{background:#FFF7EC;border-color:#D08A2E}
+.res-TAMPERED{background:#FFF4F3;border-color:#B3261E}
+.res-NOT_FOUND{background:#FFFFFF;border-color:#A9B3BD}
+.ico{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.ico-VALID{background:#1D6430;color:#fff}.ico-EXPIRED{background:#8A4A00;color:#fff}.ico-TAMPERED{background:#B3261E;color:#fff}.ico-NOT_FOUND{background:#56616C;color:#fff}
+.seg{min-height:40px;padding:0 12px;border-radius:8px;border:1px solid #C9D1D8;background:#fff;font:500 14px/1 'IBM Plex Sans Thai',sans-serif;color:#3D4853;cursor:pointer}
+.seg-on{background:#13202B;color:#fff;border-color:#13202B}
+</style>
+</helmet>
+<div style="min-height: 1000px; background: #F3F5F7; font-family: 'IBM Plex Sans Thai', sans-serif; color: #13202B">
+  <header style="background: #FFFFFF; border-bottom: 1px solid #DCE2E8">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #13202B">
+        <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#0B5CAD"></circle><path d="M11 17h18M12 28h16M13 17v9M18 17v9M22 17v9M27 17v9M10 31h20M20 9l10 6H10z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+        <span style="display: flex; flex-direction: column; line-height: 1.25"><strong style="font-size: 17px">e-Service กลาง</strong><span style="font-size: 13px; color: #56616C">เทศบาลนครตัวอย่าง</span></span>
+      </a>
+      <span class="muted" style="margin-left: auto">ไม่ต้องเข้าสู่ระบบ</span>
+    </div>
+  </header>
+
+  <main style="max-width: 760px; margin: 0 auto; padding: 40px 24px 56px; display: flex; flex-direction: column; gap: 24px">
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <h1 style="margin: 0; font-size: 32px">ตรวจสอบเอกสารราชการ</h1>
+      <p style="margin: 0; font-size: 17px; color: #3D4853; line-height: 1.6">สแกน QR บนเอกสาร หรือกรอกรหัสตรวจสอบ 8 ตัว เพื่อยืนยันว่าเอกสารออกโดยเทศบาลจริงและไม่ถูกแก้ไข</p>
+    </div>
+    <form style="display: flex; flex-wrap: wrap; gap: 12px">
+      <label for="vcode" style="position: absolute; left: -9999px">รหัสตรวจสอบ</label>
+      <input id="vcode" class="input" value="{{code}}" maxlength="8">
+      <button type="button" class="btn btn-primary">ตรวจสอบ</button>
+    </form>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+      <span class="muted">ตัวอย่างผล:</span>
+      <sc-for list="{{opts}}" as="o" hint-placeholder-count="4">
+        <button type="button" class="{{o.cls}}" aria-pressed="{{o.pressed}}" onClick="{{o.pick}}">{{o.label}}</button>
+      </sc-for>
+    </div>
+
+    <section class="{{resCls}}" aria-live="polite">
+      <div style="display: flex; gap: 16px; align-items: center">
+        <span class="{{icoCls}}" aria-hidden="true">
+          <sc-if value="{{isValid}}" hint-placeholder-val="{{ true }}"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></sc-if>
+          <sc-if value="{{isExpired}}" hint-placeholder-val="{{ false }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></sc-if>
+          <sc-if value="{{isTampered}}" hint-placeholder-val="{{ false }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></sc-if>
+          <sc-if value="{{isNotFound}}" hint-placeholder-val="{{ false }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-5-5"></path></svg></sc-if>
+        </span>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h2 style="margin: 0; font-size: 26px" data-testid="verify-result" data-result="{{result}}">{{title}}</h2>
+          <span style="font-size: 15px; color: #3D4853">{{sub}}</span>
+        </div>
+      </div>
+      <sc-if value="{{showDetail}}" hint-placeholder-val="{{ true }}">
+        <dl style="margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; padding-top: 18px; border-top: 1px solid rgba(19,32,43,0.12)">
+          <div><dt class="muted">เลขเอกสาร</dt><dd style="margin: 4px 0 0; font-size: 17px; font-weight: 600" class="mono" data-testid="verify-doc-no">DOC-2569-000001</dd></div>
+          <div><dt class="muted">ผู้ยื่น</dt><dd style="margin: 4px 0 0; font-size: 17px; font-weight: 600" data-testid="verify-applicant">สมชาย ใ***</dd></div>
+          <div><dt class="muted">บริการ</dt><dd style="margin: 4px 0 0; font-size: 17px" data-testid="verify-service">ขอหนังสือรับรอง</dd></div>
+          <div><dt class="muted">ผู้ลงนาม</dt><dd style="margin: 4px 0 0; font-size: 17px" data-testid="verify-signer">เจ้าหน้าที่ทะเบียน 1</dd></div>
+          <div><dt class="muted">วันที่ออก</dt><dd style="margin: 4px 0 0; font-size: 17px" data-testid="verify-issued" data-iso="2026-11-05T10:00:00+07:00">5 พ.ย. 2569</dd></div>
+          <div><dt class="muted">ใช้ได้ถึง (วันสุดท้าย)</dt><dd style="margin: 4px 0 0; font-size: 17px; font-weight: 600" data-testid="verify-expires" data-iso="2027-02-02">2 ก.พ. 2570</dd></div>
+        </dl>
+      </sc-if>
+    </section>
+
+    <p class="muted" style="margin: 0; line-height: 1.6">ลายเซ็นดิจิทัลในระบบนี้เป็นการจำลอง (HMAC) เพื่อการทดสอบ · หน้านี้แสดงชื่อผู้ยื่นแบบปิดบังเพื่อคุ้มครองข้อมูลส่วนบุคคล</p>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"result":{"editor":"enum","options":["VALID","EXPIRED","TAMPERED","NOT_FOUND"],"default":"VALID","section":"ตัวอย่างผล"},"$preview":{"width":1280,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const r = s.r ?? (this.props.result ?? 'VALID');
+    const M = {
+      VALID: ['เอกสารถูกต้อง', 'ออกโดยเทศบาลนครตัวอย่าง ลายเซ็นตรงกับข้อมูล และยังไม่หมดอายุ', 'K7M2Q9XA'],
+      EXPIRED: ['เอกสารหมดอายุ', 'เอกสารนี้ออกจริง แต่พ้นวันที่ใช้ได้แล้ว', 'K7M2Q9XA'],
+      TAMPERED: ['ลายเซ็นไม่ถูกต้อง', 'ข้อมูลในเอกสารถูกแก้ไขหลังลงนาม อย่าใช้เอกสารนี้', 'R3X9B7LP'],
+      NOT_FOUND: ['ไม่พบเอกสาร', 'ไม่มีรหัสตรวจสอบนี้ในระบบ ตรวจรหัสอีกครั้ง', 'ZZZZ0000']
+    };
+    const labels = { VALID: 'ถูกต้อง', EXPIRED: 'หมดอายุ', TAMPERED: 'ถูกแก้ไข', NOT_FOUND: 'ไม่พบ' };
+    const opts = Object.keys(labels).map((k) => ({
+      label: labels[k], cls: k === r ? 'seg seg-on' : 'seg', pressed: String(k === r),
+      pick: () => this.setState({ r: k })
+    }));
+    return {
+      result: r, title: M[r][0], sub: M[r][1], code: M[r][2],
+      resCls: 'res res-' + r, icoCls: 'ico ico-' + r,
+      isValid: r === 'VALID', isExpired: r === 'EXPIRED', isTampered: r === 'TAMPERED', isNotFound: r === 'NOT_FOUND',
+      showDetail: r === 'VALID' || r === 'EXPIRED',
+      opts
+    };
+  }
+}
+</script>
+</body>
+</html>

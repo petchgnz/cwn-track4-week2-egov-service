@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>ยื่นคำขอ 3 ขั้นตอน</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0;background:#F3F5F7}
+*{box-sizing:border-box}
+a{color:#0B5CAD}a:hover{color:#08457F}
+.mono{font-family:'IBM Plex Mono',monospace}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:8px;font:600 16px/1 'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn-primary{background:#0B5CAD;color:#fff}.btn-primary:hover{background:#08457F;color:#fff}
+.btn-secondary{background:#fff;color:#0B5CAD;border-color:#B9CCE0}
+.btn-sm{min-height:40px;padding:0 14px;font-size:14px}
+.btn:disabled{background:#E4E8EC;color:#69737D;border-color:#E4E8EC;cursor:not-allowed}
+.btn-x{background:transparent;color:#A1261D;min-height:40px;min-width:40px;padding:0;border-radius:8px}
+.label{font:600 15px/1.4 'IBM Plex Sans Thai',sans-serif;color:#13202B}
+.input{width:100%;max-width:240px;height:48px;border:1px solid #8E9AA6;border-radius:8px;padding:0 14px;font:500 18px/1 'IBM Plex Sans Thai',sans-serif;color:#13202B;background:#fff}
+.input:focus{outline:3px solid #9CC3EA;outline-offset:1px;border-color:#0B5CAD}
+.input-err{border-color:#A1261D;border-width:2px}
+.help{font-size:14px;line-height:1.5;color:#56616C}
+.err{font-size:14px;line-height:1.5;color:#A1261D;display:flex;gap:8px;align-items:flex-start;font-weight:500;margin:0}
+.muted{color:#56616C;font-size:14px}
+.step{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:#56616C}
+.step .n{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #A9B3BD;background:#fff;font-size:14px;flex:none}
+.step.cur{color:#0B5CAD}.step.cur .n{border-color:#0B5CAD;background:#0B5CAD;color:#fff}
+.step.done{color:#1D6430}.step.done .n{border-color:#1D6430;background:#E4F3E7;color:#1D6430}
+.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px}
+.tag-req{background:#FBE7E6;color:#9B2219}
+.tag-opt{background:#EEF0F2;color:#3D4853}
+.doc{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;padding:16px;border:1px solid #DCE2E8;border-radius:12px;background:#fff}
+.doc-missing{border-style:dashed;border-color:#A9B3BD;background:#FAFBFC}
+.file{display:inline-flex;align-items:center;gap:8px;padding:6px 6px 6px 12px;border-radius:8px;background:#E4F3E7;color:#1D6430;font-size:14px;font-weight:500}
+.qr{display:grid;grid-template-columns:repeat(25,8px);grid-auto-rows:8px;padding:12px;background:#fff;border:1px solid #DCE2E8;border-radius:8px}
+.qr-dim{opacity:.15}
+.ps{font-weight:600}.ps-pending{color:#7A4100}.ps-expired{color:#9B2219}.ps-paid{color:#1D6430}
+</style>
+</helmet>
+<div style="min-height: 1320px; background: #F3F5F7; font-family: 'IBM Plex Sans Thai', sans-serif; color: #13202B">
+  <header style="background: #FFFFFF; border-bottom: 1px solid #DCE2E8">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #13202B">
+        <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#0B5CAD"></circle><path d="M11 17h18M12 28h16M13 17v9M18 17v9M22 17v9M27 17v9M10 31h20M20 9l10 6H10z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+        <span style="display: flex; flex-direction: column; line-height: 1.25"><strong style="font-size: 17px">e-Service กลาง</strong><span style="font-size: 13px; color: #56616C">เทศบาลนครตัวอย่าง</span></span>
+      </a>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 16px">
+        <span data-testid="user-name" data-role="citizen" style="font-size: 15px; font-weight: 500">สมชาย ใจดี</span>
+        <a href="Main.dc.html" style="font-size: 15px">ออกจากระบบ</a>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 24px 24px 56px; display: flex; flex-direction: column; gap: 24px">
+    <a href="CitizenHome.dc.html" style="font-size: 15px; display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; min-height: 44px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>กลับไปคำขอของฉัน</a>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between">
+      <h1 style="margin: 0; font-size: 30px; line-height: 1.3" data-testid="service-name">{{serviceName}}</h1>
+      <span class="muted">รหัสบริการ <span class="mono">{{service}}</span><sc-if value="{{hasDraft}}" hint-placeholder-val="{{ true }}"> · ร่าง <span class="mono" data-testid="draft-id">DR-0003</span></sc-if></span>
+    </div>
+
+    <ol aria-label="ขั้นตอนการยื่นคำขอ" style="list-style: none; margin: 0; padding: 16px 20px; background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 14px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: center">
+      <sc-for list="{{steps}}" as="st" hint-placeholder-count="3">
+        <li class="{{st.cls}}" aria-current="{{st.current}}"><span class="n">{{st.mark}}</span>{{st.label}}</li>
+      </sc-for>
+      <li style="margin-left: auto"><span data-testid="wizard-step" class="mono" style="font-size: 13px; color: #56616C">{{wizardStep}}</span></li>
+    </ol>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <section style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 24px">
+
+        <sc-if value="{{isStep1}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-direction: column; gap: 24px">
+            <h2 style="margin: 0; font-size: 22px">กรอกข้อมูลคำขอ</h2>
+            <sc-if value="{{isSV01}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <label class="label" for="qty">จำนวนฉบับ</label>
+                <input id="qty" class="{{inputClass}}" data-testid="qty-input" type="number" min="1" max="5" value="{{qty}}" onChange="{{onQty}}">
+                <span class="help">1–5 ฉบับ ฉบับละ ฿20</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{isSV02}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <label class="label" for="biz">ชื่อกิจการ</label>
+                <input id="biz" class="input" style="max-width: 100%" placeholder="เช่น ร้านกาแฟใจดี">
+                <span class="help">ค่าธรรมเนียมคงที่ ฿500</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{isSV03}}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <label class="label" for="area">พื้นที่ก่อสร้าง/ต่อเติม (ตร.ม.)</label>
+                <input id="area" class="{{inputClass}}" data-testid="area-input" type="number" min="1" max="500" value="{{area}}" onChange="{{onArea}}">
+                <span class="help">1–500 ตร.ม. · 100 ตร.ม. แรก ฿1,000 · ส่วนเกิน ตร.ม. ละ ฿10 · เกิน 500 ตร.ม. ยื่นที่สำนักงาน</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{hasFeeErr}}" hint-placeholder-val="{{ false }}">
+              <p class="err" data-testid="fee-error" role="alert"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 2px"><circle cx="12" cy="12" r="10"></circle><path d="M12 7v6M12 17h.01"></path></svg>{{feeErr}}</p>
+            </sc-if>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px; border-radius: 12px; background: #F3F7FB; border: 1px solid #D7E4F1">
+              <div style="display: flex; flex-direction: column; gap: 4px">
+                <span class="muted">ค่าธรรมเนียม</span>
+                <span class="muted">{{feeBreakdown}}</span>
+              </div>
+              <strong data-testid="fee-total" style="font-size: 34px; font-variant-numeric: tabular-nums" aria-live="polite">{{feeText}}</strong>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between">
+              <button type="button" class="btn btn-secondary" data-testid="save-draft-btn" onClick="{{saveDraft}}">บันทึกร่าง</button>
+              <button type="button" class="btn btn-primary" data-testid="to-upload-btn" disabled="{{feeInvalid}}" onClick="{{toStep2}}">ถัดไป: แนบเอกสาร</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{isStep2}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 20px">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline">
+              <h2 style="margin: 0; font-size: 22px">แนบเอกสารหลักฐาน</h2>
+              <span class="muted">แนบแล้ว {{fileCount}}/5 ไฟล์ · ไฟล์ละไม่เกิน 5 MB</span>
+            </div>
+            <sc-if value="{{showUploadErr}}" hint-placeholder-val="{{ false }}">
+              <p class="err" data-testid="upload-error" role="alert" style="padding: 12px 14px; background: #FBE7E6; border-radius: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 2px"><circle cx="12" cy="12" r="10"></circle><path d="M12 7v6M12 17h.01"></path></svg><span>แบบแปลนต้องเป็นไฟล์ PDF เท่านั้น <span style="font-weight: 400">(plan.jpg ไม่ถูกเพิ่ม)</span></span></p>
+            </sc-if>
+            <sc-for list="{{docs}}" as="d" hint-placeholder-count="3">
+              <div class="{{d.cls}}">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="{{d.iconColor}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>
+                <div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 4px">
+                  <span style="display: flex; gap: 8px; align-items: center; font-size: 16px; font-weight: 600">{{d.name}}<span class="{{d.tagCls}}">{{d.reqLabel}}</span></span>
+                  <span class="muted">{{d.hint}}</span>
+                </div>
+                <sc-if value="{{d.attached}}" hint-placeholder-val="{{ true }}">
+                  <span class="file" data-testid="file-item" data-name="{{d.fileName}}" data-doc-key="{{d.key}}">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>{{d.fileName}} · {{d.size}}
+                    <button type="button" class="btn-x btn" data-testid="file-remove-btn" aria-label="ลบไฟล์ {{d.fileName}}" onClick="{{d.remove}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+                  </span>
+                </sc-if>
+                <sc-if value="{{d.notAttached}}" hint-placeholder-val="{{ false }}">
+                  <button type="button" class="btn btn-secondary btn-sm" data-testid="upload-input-{{d.key}}" onClick="{{d.attach}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"></path></svg>เลือกไฟล์</button>
+                </sc-if>
+              </div>
+            </sc-for>
+            <div class="doc doc-missing">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#56616C" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none"><path d="M12 5v14M5 12h14"></path></svg>
+              <div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 4px">
+                <span style="font-size: 16px; font-weight: 600">เอกสารเพิ่มเติม <span class="tag tag-opt">ไม่บังคับ</span></span>
+                <span class="muted">เลือกได้หลายไฟล์ รวมทั้งคำขอไม่เกิน 5 ไฟล์</span>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" data-testid="upload-input-extra">เลือกไฟล์</button>
+            </div>
+            <sc-if value="{{hasMissing}}" hint-placeholder-val="{{ true }}">
+              <p data-testid="missing-docs" role="status" style="margin: 0; padding: 12px 14px; border-radius: 8px; background: #FDEBD3; color: #5E2B00; font-size: 15px; font-weight: 600">ยังขาดเอกสาร: {{missingText}}</p>
+            </sc-if>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between">
+              <button type="button" class="btn btn-secondary" onClick="{{toStep1}}">ย้อนกลับ</button>
+              <button type="button" class="btn btn-primary" data-testid="to-payment-btn" disabled="{{hasMissing}}" onClick="{{toStep3}}">ไปชำระเงิน</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{isStep3}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 20px">
+            <sc-if value="{{notPaid}}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-direction: column; gap: 20px">
+                <h2 style="margin: 0; font-size: 22px">ชำระค่าธรรมเนียมด้วย PromptPay</h2>
+                <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: center">
+                  <div style="position: relative">
+                    <div class="{{qrCls}}" data-testid="qr-image" role="img" aria-label="QR Code PromptPay จำลอง">
+                      <sc-for list="{{qrCells}}" as="c" hint-placeholder-count="625"><span style="background: {{c.bg}}"></span></sc-for>
+                    </div>
+                    <sc-if value="{{expired}}" hint-placeholder-val="{{ false }}">
+                      <span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: #9B2219">หมดอายุ</span>
+                    </sc-if>
+                  </div>
+                  <dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 18px; font-size: 15px; flex: 1 1 260px">
+                    <dt class="muted">ยอดชำระ</dt><dd style="margin: 0; font-size: 26px; font-weight: 700" data-testid="payment-amount">{{feeText}}</dd>
+                    <dt class="muted">เลขอ้างอิง</dt><dd style="margin: 0" class="mono" data-testid="qr-ref">PP-0002</dd>
+                    <dt class="muted">ใช้ได้ถึง</dt><dd style="margin: 0" data-testid="qr-expires" data-iso="2026-12-01T09:15:00+07:00">หมดอายุ 1 ธ.ค. 2569 09:15</dd>
+                    <dt class="muted">สถานะ</dt><dd style="margin: 0"><span data-testid="payment-status" data-status="{{payCode}}" class="{{payCls}}">{{payText}}</span></dd>
+                  </dl>
+                </div>
+                <sc-if value="{{expired}}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 10px; background: #FBE7E6; color: #7E1D16">
+                    <span data-testid="qr-expired-msg" style="flex: 1 1 260px; font-weight: 600">QR หมดอายุ กรุณาสร้าง QR ใหม่</span>
+                    <button type="button" class="btn btn-primary btn-sm" data-testid="regenerate-qr-btn" onClick="{{regen}}">สร้าง QR ใหม่</button>
+                  </div>
+                </sc-if>
+                <sc-if value="{{pending}}" hint-placeholder-val="{{ true }}">
+                  <p class="help" style="margin: 0">สแกนด้วยแอปธนาคาร ยอดต้องตรงกับค่าธรรมเนียมพอดี QR ใช้ได้ 15 นาทีนับจากเวลาสร้าง</p>
+                </sc-if>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between">
+                  <button type="button" class="btn btn-secondary" onClick="{{toStep2}}">ย้อนกลับ</button>
+                  <div style="display: flex; flex-wrap: wrap; gap: 12px">
+                    <button type="button" class="btn btn-secondary" data-testid="refresh-payment-btn">ตรวจสอบการชำระเงิน</button>
+                    <button type="button" class="btn btn-primary" disabled="{{expired}}" onClick="{{simulatePay}}">จำลองชำระสำเร็จ</button>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{paid}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start">
+                <span style="width: 56px; height: 56px; border-radius: 50%; background: #E4F3E7; display: flex; align-items: center; justify-content: center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1D6430" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></span>
+                <div style="display: flex; flex-direction: column; gap: 6px">
+                  <h2 style="margin: 0; font-size: 24px">ชำระเงินสำเร็จ ส่งคำขอแล้ว</h2>
+                  <span data-testid="payment-status" data-status="PAID" class="muted">ชำระแล้ว</span>
+                </div>
+                <dl style="margin: 0; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+                  <div style="padding: 16px; border-radius: 12px; background: #F3F7FB; border: 1px solid #D7E4F1"><dt class="muted">เลขคำขอ</dt><dd style="margin: 4px 0 0; font-size: 20px; font-weight: 600" class="mono" data-testid="submitted-case-no">EG-2569-000031</dd></div>
+                  <div style="padding: 16px; border-radius: 12px; background: #F7F9FA; border: 1px solid #E4E8EC"><dt class="muted">เลขใบเสร็จ</dt><dd style="margin: 4px 0 0; font-size: 20px; font-weight: 600" class="mono" data-testid="receipt-no">RC-2569-000031</dd></div>
+                  <div style="padding: 16px; border-radius: 12px; background: #F7F9FA; border: 1px solid #E4E8EC"><dt class="muted">ยอดที่ชำระ</dt><dd style="margin: 4px 0 0; font-size: 20px; font-weight: 600" data-testid="receipt-amount">{{feeText}}</dd></div>
+                  <div style="padding: 16px; border-radius: 12px; background: #F7F9FA; border: 1px solid #E4E8EC"><dt class="muted">ชำระเมื่อ</dt><dd style="margin: 4px 0 0; font-size: 18px; font-weight: 600" data-testid="receipt-paid-at" data-iso="2026-12-01T09:05:00+07:00">1 ธ.ค. 2569 09:05</dd></div>
+                </dl>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px">
+                  <a href="CaseDetail.dc.html" class="btn btn-primary" data-testid="go-case-btn">ดูคำขอ</a>
+                  <button type="button" class="btn btn-secondary">ดาวน์โหลดใบเสร็จ</button>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </section>
+
+      <aside aria-label="สรุปคำขอ" style="flex: 1 1 300px; min-width: 0; background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+        <h2 style="margin: 0; font-size: 18px">สรุปคำขอ</h2>
+        <dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; font-size: 15px">
+          <dt class="muted">บริการ</dt><dd style="margin: 0">{{serviceName}}</dd>
+          <dt class="muted">ค่าธรรมเนียม</dt><dd style="margin: 0; font-weight: 700">{{feeText}}</dd>
+          <dt class="muted">ระยะเวลา</dt><dd style="margin: 0">{{sla}} วันทำการ</dd>
+          <dt class="muted">เส้นทาง</dt><dd style="margin: 0">{{route}}</dd>
+        </dl>
+        <hr style="border: 0; border-top: 1px solid #E4E8EC; margin: 0">
+        <p class="help" style="margin: 0">ได้เลขคำขอเมื่อชำระเงินสำเร็จ กำหนดเสร็จนับวันทำการถัดจากวันชำระ (ชำระหลัง 16:30 นับเป็นวันทำการถัดไป)</p>
+        <p class="help" style="margin: 0; padding: 12px; background: #FFF4E0; border-radius: 8px; color: #5E3200">ค่าธรรมเนียมที่ชำระแล้วไม่คืน แม้คำขอไม่ได้รับอนุมัติหรือถูกยกเลิก</p>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"service":{"editor":"enum","options":["SV-01","SV-02","SV-03"],"default":"SV-03","section":"ตัวอย่าง"},"startStep":{"editor":"enum","options":["1","2","3"],"default":"1","section":"ตัวอย่าง"},"paymentDemo":{"editor":"enum","options":["pending","expired","paid"],"default":"pending","section":"ตัวอย่าง"},"$preview":{"width":1280,"height":1320}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const sv = this.props.service ?? 'SV-03';
+    const step = s.step ?? Number(this.props.startStep ?? '1');
+    const qty = s.qty ?? '1';
+    const area = s.area ?? '101';
+    const meta = {
+      'SV-01': { name: 'ขอหนังสือรับรอง', sla: 3, route: 'ฝ่ายทะเบียน → ออกเอกสาร' },
+      'SV-02': { name: 'ขออนุญาตประกอบกิจการ', sla: 10, route: 'ฝ่ายทะเบียน → หัวหน้าฝ่ายอนุมัติ → ออกเอกสาร' },
+      'SV-03': { name: 'ขออนุญาตก่อสร้าง/ต่อเติมอาคาร', sla: 15, route: 'ฝ่ายทะเบียน → ฝ่ายโยธา → หัวหน้าฝ่ายอนุมัติ → ออกเอกสาร' }
+    }[sv];
+    const fmt = (n) => '฿' + n.toLocaleString('en-US');
+    let fee = null, feeErr = '', breakdown = '';
+    if (sv === 'SV-01') {
+      const q = Number(qty);
+      if (qty !== '' && Number.isInteger(q) && q >= 1 && q <= 5) { fee = 20 * q; breakdown = '฿20 × ' + q + ' ฉบับ'; }
+      else feeErr = 'จำนวนฉบับต้อง 1–5 ฉบับ';
+    } else if (sv === 'SV-02') { fee = 500; breakdown = 'อัตราคงที่'; }
+    else {
+      const a = Number(area);
+      if (area === '' || !Number.isInteger(a) || a < 1) feeErr = 'กรุณาระบุพื้นที่ 1–500 ตร.ม.';
+      else if (a > 500) feeErr = 'พื้นที่เกิน 500 ตร.ม. กรุณายื่นที่สำนักงาน';
+      else { fee = 1000 + 10 * Math.max(0, a - 100); breakdown = a > 100 ? '฿1,000 + ฿10 × ' + (a - 100) + ' ตร.ม. ส่วนเกิน' : '100 ตร.ม. แรก อัตราคงที่'; }
+    }
+    const defs = {
+      'SV-01': [{ key: 'id-card', name: 'บัตรประชาชน', req: true }],
+      'SV-02': [{ key: 'id-card', name: 'บัตรประชาชน', req: true }, { key: 'map', name: 'แผนที่ตั้ง', req: true }, { key: 'site-photo', name: 'ภาพสถานที่', req: false }],
+      'SV-03': [{ key: 'id-card', name: 'บัตรประชาชน', req: true }, { key: 'plan', name: 'แบบแปลน', req: true }, { key: 'deed', name: 'โฉนด', req: true }]
+    }[sv];
+    const att = s.att ?? { 'id-card': true };
+    const sizes = { 'id-card': '182 KB', map: '1.2 MB', 'site-photo': '2.4 MB', plan: '4.8 MB', deed: '640 KB' };
+    const docs = defs.map((d) => ({
+      key: d.key, name: d.name,
+      attached: !!att[d.key], notAttached: !att[d.key],
+      cls: att[d.key] ? 'doc' : 'doc doc-missing',
+      iconColor: att[d.key] ? '#1D6430' : '#56616C',
+      fileName: d.key + (d.key === 'site-photo' ? '.jpg' : '.pdf'),
+      size: sizes[d.key],
+      reqLabel: d.req ? 'จำเป็น' : 'ไม่บังคับ',
+      tagCls: d.req ? 'tag tag-req' : 'tag tag-opt',
+      hint: d.key === 'plan' ? 'PDF เท่านั้น · ไม่เกิน 5 MB' : 'PDF, JPG หรือ PNG · ไม่เกิน 5 MB',
+      attach: () => this.setState({ att: Object.assign({}, att, { [d.key]: true }), upErrGone: true }),
+      remove: () => { const n = Object.assign({}, att); delete n[d.key]; this.setState({ att: n }); }
+    }));
+    const missing = defs.filter((d) => d.req && !att[d.key]).map((d) => d.name);
+    const pay = s.pay ?? (this.props.paymentDemo ?? 'pending');
+    const cells = [];
+    const finder = (r, c) => {
+      const box = (r0, c0) => r >= r0 && r < r0 + 7 && c >= c0 && c < c0 + 7;
+      const ring = (r0, c0) => { const y = r - r0, x = c - c0; return y === 0 || y === 6 || x === 0 || x === 6 || (y >= 2 && y <= 4 && x >= 2 && x <= 4); };
+      if (box(0, 0)) return ring(0, 0) ? 1 : 0;
+      if (box(0, 18)) return ring(0, 18) ? 1 : 0;
+      if (box(18, 0)) return ring(18, 0) ? 1 : 0;
+      return -1;
+    };
+    for (let r = 0; r < 25; r++) for (let c = 0; c < 25; c++) {
+      const f = finder(r, c);
+      const on = f === -1 ? ((r * 31 + c * 17 + r * c * 7) % 5 < 2) : f === 1;
+      cells.push({ bg: on ? '#13202B' : '#FFFFFF' });
+    }
+    const labels = ['กรอกข้อมูล', 'แนบเอกสาร', 'ชำระเงิน'];
+    const steps = labels.map((l, i) => ({
+      label: l,
+      mark: i + 1 < step ? '✓' : String(i + 1),
+      cls: i + 1 === step ? 'step cur' : (i + 1 < step ? 'step done' : 'step'),
+      current: i + 1 === step ? 'step' : 'false'
+    }));
+    const payMap = {
+      pending: ['PENDING', 'รอชำระ', 'ps ps-pending'],
+      expired: ['EXPIRED', 'QR หมดอายุ', 'ps ps-expired'],
+      paid: ['PAID', 'ชำระแล้ว', 'ps ps-paid']
+    }[pay];
+    return {
+      service: sv, serviceName: meta.name, sla: meta.sla, route: meta.route,
+      isSV01: sv === 'SV-01', isSV02: sv === 'SV-02', isSV03: sv === 'SV-03',
+      qty, area,
+      onQty: (e) => this.setState({ qty: e.target.value }),
+      onArea: (e) => this.setState({ area: e.target.value }),
+      feeText: fee == null ? '–' : fmt(fee),
+      feeBreakdown: fee == null ? 'ยังคำนวณไม่ได้' : breakdown,
+      feeErr, hasFeeErr: !!feeErr, feeInvalid: fee == null,
+      inputClass: feeErr ? 'input input-err' : 'input',
+      hasDraft: !!s.saved || step > 1,
+      saveDraft: () => this.setState({ saved: true }),
+      steps, wizardStep: step + '/3 ' + labels[step - 1],
+      isStep1: step === 1, isStep2: step === 2, isStep3: step === 3,
+      toStep1: () => this.setState({ step: 1 }),
+      toStep2: () => this.setState({ step: 2 }),
+      toStep3: () => this.setState({ step: 3 }),
+      docs, fileCount: Object.keys(att).length,
+      hasMissing: missing.length > 0, missingText: missing.join(', '),
+      showUploadErr: sv === 'SV-03' && !s.upErrGone && !att.plan,
+      qrCells: cells,
+      qrCls: pay === 'expired' ? 'qr qr-dim' : 'qr',
+      pending: pay === 'pending', expired: pay === 'expired', paid: pay === 'paid', notPaid: pay !== 'paid',
+      payCode: payMap[0], payText: payMap[1], payCls: payMap[2],
+      regen: () => this.setState({ pay: 'pending' }),
+      simulatePay: () => this.setState({ pay: 'paid' })
+    };
+  }
+}
+</script>
+</body>
+</html>

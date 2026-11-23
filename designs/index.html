@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ต้นแบบหน้าจอ e-Service</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600;700&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap">
+<style>
+body{margin:0;background:#F3F5F7;font-family:'IBM Plex Sans Thai',sans-serif;color:#13202B}
+main{max-width:1000px;margin:0 auto;padding:40px 24px 56px}
+h1{margin:0 0 8px;font-size:30px}
+h2{margin:32px 0 12px;font-size:19px}
+p{margin:0;color:#3D4853;line-height:1.6}
+ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+a{display:flex;flex-direction:column;gap:4px;padding:16px 18px;background:#fff;border:1px solid #DCE2E8;border-radius:12px;text-decoration:none;color:#13202B}
+a:hover{border-color:#0B5CAD}
+a strong{font-size:16px;color:#0B5CAD}
+span{font-size:14px;color:#56616C}
+code{font-family:'IBM Plex Mono',monospace;font-size:13px}
+</style>
+</head>
+<body>
+<main>
+<h1>ต้นแบบหน้าจอ e-Service กลาง</h1>
+<p>12 หน้าจอตาม USER-STORIES.md · ตัวเลขและข้อความตาม TEST-DATA.md / CONTRACT.md · หลายหน้ากดใช้งานได้ และกดลิงก์ไปหน้าถัดไปได้</p>
+
+<h2>ประชาชน</h2>
+<ul>
+<li><a href="Main.html"><strong>เข้าสู่ระบบ</strong><span>US-C01a · ThaiD จำลอง + OTP / SSO เจ้าหน้าที่</span></a></li>
+<li><a href="Register.html"><strong>ลงทะเบียนครั้งแรก + PDPA</strong><span>US-C01b</span></a></li>
+<li><a href="CitizenHome.html"><strong>คำขอของฉัน</strong><span>US-C02a · US-C02c</span></a></li>
+<li><a href="NewRequest.html"><strong>ยื่นคำขอ 3 ขั้น</strong><span>US-C02a · US-C02b · US-C03 · คำนวณค่าธรรมเนียม แนบเอกสาร QR</span></a></li>
+<li><a href="CaseDetail.html"><strong>รายละเอียดคำขอ</strong><span>US-C02c · รอแก้ไข / ยกเลิก / ไม่อนุมัติ</span></a></li>
+</ul>
+
+<h2>เจ้าหน้าที่ · หัวหน้าฝ่าย · ผู้รับเอกสาร</h2>
+<ul>
+<li><a href="OfficerQueue.html"><strong>คิวงาน + แจ้งเตือน SLA</strong><span>US-O01a · US-O02</span></a></li>
+<li><a href="OfficerCase.html"><strong>ตรวจคำขอ</strong><span>US-O01b · US-O03a · US-O03b</span></a></li>
+<li><a href="HeadApprovals.html"><strong>รายการรออนุมัติ</strong><span>US-O03a</span></a></li>
+<li><a href="Verify.html"><strong>ตรวจสอบเอกสาร (สาธารณะ)</strong><span>US-O03b</span></a></li>
+</ul>
+
+<h2>ผู้บริหาร · ผู้ตรวจสอบ · ผู้ดูแลระบบ</h2>
+<ul>
+<li><a href="Dashboard.html"><strong>Dashboard</strong><span>US-A01</span></a></li>
+<li><a href="Audit.html"><strong>Audit Trail</strong><span>US-A02</span></a></li>
+<li><a href="Admin.html"><strong>ผู้ดูแลระบบ</strong><span>US-AD01 · บริการ / วันหยุด / ผู้ใช้</span></a></li>
+</ul>
+
+<h2>เกี่ยวกับไฟล์</h2>
+<p>หน้า <code>*.html</code> ใช้ <code>support.js</code> ในโฟลเดอร์นี้ในการแสดงผล ไม่ต้องติดตั้งอะไร (ฟอนต์โหลดจาก Google Fonts) · ต้นฉบับสำหรับ canvas อยู่ใน <code>source/</code></p>
+</main>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-11-23T10:00:00Z"},
+  "title": "e-Service เทศบาลนครตัวอย่าง",
+  "launch": {"view": "canvas", "page": "citizen"},
+  "pages": [
+    {"id": "citizen", "name": "ประชาชน"},
+    {"id": "officer", "name": "เจ้าหน้าที่ · หัวหน้า"},
+    {"id": "mgmt", "name": "ผู้บริหาร · ผู้ตรวจ · ผู้ดูแล"}
+  ],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1280, "h": 960, "page": "citizen", "title": "เข้าสู่ระบบ · US-C01a", "expand": "fill", "is_interactive": true},
+    "Register.dc.html": {"x": 1360, "y": 0, "w": 1280, "h": 960, "page": "citizen", "title": "ลงทะเบียนครั้งแรก + PDPA · US-C01b", "expand": "fill"},
+    "CitizenHome.dc.html": {"x": 2720, "y": 0, "w": 1280, "h": 1180, "page": "citizen", "title": "คำขอของฉัน · US-C02a / US-C02c", "expand": "fill"},
+    "NewRequest.dc.html": {"x": 4080, "y": 0, "w": 1280, "h": 1320, "page": "citizen", "title": "ยื่นคำขอ 3 ขั้น · US-C02a / US-C02b / US-C03", "expand": "fill", "is_interactive": true},
+    "CaseDetail.dc.html": {"x": 5440, "y": 0, "w": 1280, "h": 1400, "page": "citizen", "title": "รายละเอียดคำขอ · US-C02c", "expand": "fill"},
+    "OfficerQueue.dc.html": {"x": 0, "y": 0, "w": 1280, "h": 1300, "page": "officer", "title": "คิวงาน + แจ้งเตือน SLA · US-O01a / US-O02", "expand": "fill", "is_interactive": true},
+    "OfficerCase.dc.html": {"x": 1360, "y": 0, "w": 1280, "h": 1640, "page": "officer", "title": "ตรวจเอกสาร · ตีกลับ · ส่งต่อ · ออกเอกสาร · US-O01b / US-O03a / US-O03b", "expand": "fill"},
+    "HeadApprovals.dc.html": {"x": 2720, "y": 0, "w": 1280, "h": 1000, "page": "officer", "title": "รายการรออนุมัติ (หัวหน้าฝ่าย) · US-O03a", "expand": "fill"},
+    "Verify.dc.html": {"x": 4080, "y": 0, "w": 1280, "h": 1000, "page": "officer", "title": "ตรวจสอบเอกสาร (สาธารณะ) · US-O03b", "expand": "fill", "is_interactive": true},
+    "Dashboard.dc.html": {"x": 0, "y": 0, "w": 1280, "h": 1240, "page": "mgmt", "title": "Dashboard ผู้บริหาร · US-A01", "expand": "fill"},
+    "Audit.dc.html": {"x": 1360, "y": 0, "w": 1280, "h": 1200, "page": "mgmt", "title": "Audit Trail · US-A02", "expand": "fill"},
+    "Admin.dc.html": {"x": 2720, "y": 0, "w": 1280, "h": 1300, "page": "mgmt", "title": "ผู้ดูแลระบบ · US-AD01", "expand": "fill", "is_interactive": true}
+  },
+  "order": [
+    "Main.dc.html", "Register.dc.html", "CitizenHome.dc.html", "NewRequest.dc.html", "CaseDetail.dc.html",
+    "OfficerQueue.dc.html", "OfficerCase.dc.html", "HeadApprovals.dc.html", "Verify.dc.html",
+    "Dashboard.dc.html", "Audit.dc.html", "Admin.dc.html"
+  ],
+  "notes": {
+    "t_citizen": {"x": 0, "y": -320, "text": "ประชาชน: เข้าสู่ระบบ → ยื่นคำขอ → ชำระ → ติดตาม", "kind": "title1", "maxW": 6720, "page": "citizen"},
+    "t_officer": {"x": 0, "y": -320, "text": "เจ้าหน้าที่ · หัวหน้าฝ่าย · ผู้รับเอกสาร", "kind": "title1", "maxW": 5360, "page": "officer"},
+    "t_mgmt": {"x": 0, "y": -320, "text": "ผู้บริหาร · ผู้ตรวจสอบภายใน · ผู้ดูแลระบบ", "kind": "title1", "maxW": 4000, "page": "mgmt"}
+  },
+  "designSystems": []
+}

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>คำขอของฉัน</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0;background:#F3F5F7}
+*{box-sizing:border-box}
+a{color:#0B5CAD}a:hover{color:#08457F}
+.mono{font-family:'IBM Plex Mono',monospace}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:8px;font:600 15px/1 'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn-primary{background:#0B5CAD;color:#fff}.btn-primary:hover{background:#08457F;color:#fff}
+.btn-secondary{background:#fff;color:#0B5CAD;border-color:#B9CCE0}
+.btn-sm{min-height:40px;padding:0 14px;font-size:14px}
+.btn-danger-text{background:transparent;color:#A1261D;padding:0 10px}
+.nav a{font-size:15px;font-weight:500;color:#3D4853;text-decoration:none;padding:10px 4px;border-bottom:3px solid transparent}
+.nav a.on{color:#0B5CAD;border-bottom-color:#0B5CAD}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font:600 13px/1.4 'IBM Plex Sans Thai',sans-serif;white-space:nowrap;border:1px solid transparent}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.st-DRAFT{background:#EEF0F2;color:#3D4853;border-color:#D3D8DD}
+.st-PENDING_PAYMENT{background:#FFF4E0;color:#7A4100;border-color:#F1D3A1}
+.st-SUBMITTED{background:#E3EEF9;color:#0A4A8A;border-color:#B9CCE0}
+.st-IN_REVIEW{background:#EEEAFB;color:#46338F;border-color:#D2C8F2}
+.st-NEED_FIX{background:#FDEBD3;color:#8A3F00;border-color:#F0C48E}
+.st-PENDING_APPROVAL{background:#E0F3F0;color:#0E5A51;border-color:#B2DED7}
+.st-COMPLETED,.st-APPROVED{background:#E4F3E7;color:#1D6430;border-color:#B7DDBF}
+.st-REJECTED{background:#FBE7E6;color:#9B2219;border-color:#EDBBB6}
+.st-CANCELLED{background:#EEF0F2;color:#4A5560;border-color:#D3D8DD}
+.sla{display:inline-flex;align-items:center;gap:6px;font:600 13px/1.4 'IBM Plex Sans Thai',sans-serif;white-space:nowrap}
+.sla-normal{color:#3D4853}
+.sla-near{color:#8A3F00}
+.sla-overdue{color:#FFFFFF;background:#B3261E;padding:3px 10px;border-radius:6px}
+.sla-paused{color:#56616C}
+.sla-closed{color:#56616C}
+.t{width:100%;border-collapse:collapse;font-size:15px;min-width:880px}
+.t th{text-align:left;font-weight:600;font-size:13px;color:#56616C;padding:12px 16px;border-bottom:1px solid #DCE2E8;background:#F7F9FA;white-space:nowrap}
+.t td{padding:14px 16px;border-bottom:1px solid #EDF0F3;vertical-align:middle}
+.t .mono{white-space:nowrap}
+.t tr:last-child td{border-bottom:0}
+.muted{color:#56616C;font-size:14px}
+.filter{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid #C9D1D8;background:#fff;font:500 14px/1 'IBM Plex Sans Thai',sans-serif;color:#3D4853;cursor:pointer}
+.filter.on{background:#13202B;color:#fff;border-color:#13202B}
+</style>
+</helmet>
+<div style="min-height: 1180px; background: #F3F5F7; font-family: 'IBM Plex Sans Thai', sans-serif; color: #13202B">
+  <header style="background: #FFFFFF; border-bottom: 1px solid #DCE2E8">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 10px 24px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #13202B; padding-bottom: 10px">
+        <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#0B5CAD"></circle><path d="M11 17h18M12 28h16M13 17v9M18 17v9M22 17v9M27 17v9M10 31h20M20 9l10 6H10z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+        <span style="display: flex; flex-direction: column; line-height: 1.25"><strong style="font-size: 17px">e-Service กลาง</strong><span style="font-size: 13px; color: #56616C">เทศบาลนครตัวอย่าง</span></span>
+      </a>
+      <nav class="nav" aria-label="เมนูหลัก" style="display: flex; gap: 24px; align-self: flex-end">
+        <a href="CitizenHome.dc.html" class="on" aria-current="page">คำขอของฉัน</a>
+        <a href="#services">ยื่นคำขอใหม่</a>
+      </nav>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 16px; padding-bottom: 10px">
+        <span data-testid="user-name" data-role="citizen" style="font-size: 15px; font-weight: 500">สมชาย ใจดี</span>
+        <a href="Main.dc.html" data-testid="logout-btn" style="font-size: 15px">ออกจากระบบ</a>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 32px 24px 56px; display: flex; flex-direction: column; gap: 32px">
+    <div role="status" style="display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; padding: 16px 20px; border-radius: 12px; background: #FDEBD3; border: 1px solid #F0C48E; color: #5E2B00">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>
+      <span style="flex: 1 1 420px; font-size: 16px; line-height: 1.5"><strong>คำขอ <span class="mono">EG-2569-000017</span> ถูกตีกลับให้แก้ไขเอกสาร</strong> · ส่งแก้ไขภายใน 4 ธ.ค. 2569 14:00 ไม่เช่นนั้นระบบจะยกเลิกคำขอ</span>
+      <a href="CaseDetail.dc.html" class="btn btn-sm" style="background: #5E2B00; color: #FFFFFF">แก้ไขเอกสาร</a>
+    </div>
+
+    <section id="services" aria-labelledby="svc-title" style="display: flex; flex-direction: column; gap: 16px">
+      <h2 id="svc-title" style="margin: 0; font-size: 22px">ยื่นคำขอใหม่</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px">
+        <article style="background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+            <h3 style="margin: 0; font-size: 18px; line-height: 1.4">ขอหนังสือรับรอง</h3>
+            <span class="mono muted">SV-01</span>
+          </div>
+          <dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 14px">
+            <dt class="muted">ค่าธรรมเนียม</dt><dd style="margin: 0; font-weight: 600">฿20 ต่อฉบับ (1–5 ฉบับ)</dd>
+            <dt class="muted">ระยะเวลา</dt><dd style="margin: 0">3 วันทำการ</dd>
+            <dt class="muted">เอกสาร</dt><dd style="margin: 0">บัตรประชาชน</dd>
+          </dl>
+          <a href="NewRequest.dc.html" class="btn btn-primary" style="margin-top: auto" data-testid="start-SV-01">ยื่นคำขอ</a>
+        </article>
+        <article style="background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+            <h3 style="margin: 0; font-size: 18px; line-height: 1.4">ขออนุญาตประกอบกิจการ</h3>
+            <span class="mono muted">SV-02</span>
+          </div>
+          <dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 14px">
+            <dt class="muted">ค่าธรรมเนียม</dt><dd style="margin: 0; font-weight: 600">฿500</dd>
+            <dt class="muted">ระยะเวลา</dt><dd style="margin: 0">10 วันทำการ</dd>
+            <dt class="muted">เอกสาร</dt><dd style="margin: 0">บัตรประชาชน · แผนที่ตั้ง · ภาพสถานที่ (ถ้ามี)</dd>
+          </dl>
+          <a href="NewRequest.dc.html" class="btn btn-secondary" style="margin-top: auto" data-testid="start-SV-02">ยื่นคำขอ</a>
+        </article>
+        <article style="background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+            <h3 style="margin: 0; font-size: 18px; line-height: 1.4">ขออนุญาตก่อสร้าง/ต่อเติมอาคาร</h3>
+            <span class="mono muted">SV-03</span>
+          </div>
+          <dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 14px">
+            <dt class="muted">ค่าธรรมเนียม</dt><dd style="margin: 0; font-weight: 600">฿1,000 + ฿10/ตร.ม. ส่วนเกิน 100</dd>
+            <dt class="muted">ระยะเวลา</dt><dd style="margin: 0">15 วันทำการ</dd>
+            <dt class="muted">เอกสาร</dt><dd style="margin: 0">บัตรประชาชน · แบบแปลน (PDF) · โฉนด</dd>
+          </dl>
+          <a href="NewRequest.dc.html" class="btn btn-secondary" style="margin-top: auto" data-testid="start-SV-03">ยื่นคำขอ</a>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="my-title" style="display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+        <h2 id="my-title" style="margin: 0; font-size: 22px">คำขอของฉัน</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <button type="button" class="filter on" aria-pressed="true">ทั้งหมด 12</button>
+          <button type="button" class="filter" aria-pressed="false">ต้องทำต่อ 3</button>
+          <button type="button" class="filter" aria-pressed="false">กำลังดำเนินการ 6</button>
+          <button type="button" class="filter" aria-pressed="false">ปิดแล้ว 3</button>
+        </div>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 14px; overflow-x: auto">
+        <table class="t">
+          <thead><tr><th scope="col">เลขคำขอ</th><th scope="col">บริการ</th><th scope="col">ค่าธรรมเนียม</th><th scope="col">สถานะ</th><th scope="col">กำหนดเสร็จ</th><th scope="col">ระดับเตือน</th><th scope="col"><span style="position: absolute; left: -9999px">การดำเนินการ</span></th></tr></thead>
+          <tbody>
+            <tr data-testid="draft-row" data-draft-id="DR-0001">
+              <td><span class="mono" data-testid="draft-id">DR-0001</span><div class="muted">ร่าง · ยังไม่มีเลขคำขอ</div></td>
+              <td>ขอหนังสือรับรอง<div class="muted">2 ฉบับ</div></td>
+              <td>฿40</td>
+              <td><span class="badge st-DRAFT" data-testid="case-status" data-status="DRAFT"><span class="dot"></span>ร่าง</span></td>
+              <td class="muted">–</td><td class="muted">–</td>
+              <td style="text-align: right"><div style="display: flex; gap: 4px; justify-content: flex-end"><a href="NewRequest.dc.html" class="btn btn-secondary btn-sm">ทำต่อ</a><button type="button" class="btn btn-danger-text btn-sm" data-testid="draft-delete-btn">ลบร่าง</button></div></td>
+            </tr>
+            <tr data-testid="draft-row" data-draft-id="DR-0002">
+              <td><span class="mono">DR-0002</span><div class="muted">รอชำระ · QR หมดอายุ 09:10</div></td>
+              <td>ขออนุญาตประกอบกิจการ</td>
+              <td>฿500</td>
+              <td><span class="badge st-PENDING_PAYMENT" data-testid="case-status" data-status="PENDING_PAYMENT"><span class="dot"></span>รอชำระเงิน</span></td>
+              <td class="muted">–</td><td class="muted">–</td>
+              <td style="text-align: right"><a href="NewRequest.dc.html" class="btn btn-primary btn-sm">ไปชำระเงิน</a></td>
+            </tr>
+            <tr data-testid="case-row" data-case-no="EG-2569-000017">
+              <td><a href="CaseDetail.dc.html" class="mono">EG-2569-000017</a></td>
+              <td>ขอหนังสือรับรอง<div class="muted">1 ฉบับ</div></td>
+              <td>฿20</td>
+              <td><span class="badge st-NEED_FIX" data-testid="case-status" data-status="NEED_FIX"><span class="dot"></span>รอแก้ไขเอกสาร</span></td>
+              <td class="muted" data-iso="2026-11-27T16:30:00+07:00">27 พ.ย. 2569 16:30</td>
+              <td><span class="sla sla-paused" data-testid="row-sla-level" data-level="paused"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 5v14M15 5v14"></path></svg>หยุดนับ</span></td>
+              <td style="text-align: right"><a href="CaseDetail.dc.html" class="btn btn-primary btn-sm">แก้ไขเอกสาร</a></td>
+            </tr>
+            <tr data-testid="case-row" data-case-no="EG-2569-000030">
+              <td><a href="CaseDetail.dc.html" class="mono">EG-2569-000030</a></td>
+              <td>ขอหนังสือรับรอง<div class="muted">1 ฉบับ</div></td>
+              <td>฿20</td>
+              <td><span class="badge st-SUBMITTED" data-testid="case-status" data-status="SUBMITTED"><span class="dot"></span>ส่งคำขอแล้ว</span></td>
+              <td data-iso="2026-12-04T16:30:00+07:00">4 ธ.ค. 2569 16:30</td>
+              <td><span class="sla sla-normal" data-testid="row-sla-level" data-level="normal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>ปกติ</span></td>
+              <td style="text-align: right"><a href="CaseDetail.dc.html" class="btn btn-secondary btn-sm">ดูคำขอ</a></td>
+            </tr>
+            <tr data-testid="case-row" data-case-no="EG-2569-000026">
+              <td><a href="CaseDetail.dc.html" class="mono">EG-2569-000026</a></td>
+              <td>ขอหนังสือรับรอง<div class="muted">5 ฉบับ</div></td>
+              <td>฿100</td>
+              <td><span class="badge st-IN_REVIEW" data-testid="case-status" data-status="IN_REVIEW"><span class="dot"></span>กำลังตรวจสอบ</span></td>
+              <td data-iso="2026-12-03T16:30:00+07:00">3 ธ.ค. 2569 16:30</td>
+              <td><span class="sla sla-normal" data-testid="row-sla-level" data-level="normal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>ปกติ</span></td>
+              <td style="text-align: right"><a href="CaseDetail.dc.html" class="btn btn-secondary btn-sm">ดูคำขอ</a></td>
+            </tr>
+            <tr data-testid="case-row" data-case-no="EG-2569-000020">
+              <td><a href="CaseDetail.dc.html" class="mono">EG-2569-000020</a></td>
+              <td>ขอหนังสือรับรอง<div class="muted">1 ฉบับ</div></td>
+              <td>฿20</td>
+              <td><span class="badge st-IN_REVIEW" data-testid="case-status" data-status="IN_REVIEW"><span class="dot"></span>กำลังตรวจสอบ</span></td>
+              <td data-iso="2026-11-30T16:30:00+07:00">30 พ.ย. 2569 16:30</td>
+              <td><span class="sla sla-overdue" data-testid="row-sla-level" data-level="overdue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v6M12 16.5h.01"></path></svg>เกินกำหนด</span></td>
+              <td style="text-align: right"><a href="CaseDetail.dc.html" class="btn btn-secondary btn-sm">ดูคำขอ</a></td>
+            </tr>
+            <tr data-testid="case-row" data-case-no="EG-2569-000018">
+              <td><a href="CaseDetail.dc.html" class="mono">EG-2569-000018</a></td>
+              <td>ขออนุญาตประกอบกิจการ</td>
+              <td>฿500</td>
+              <td><span class="badge st-IN_REVIEW" data-testid="case-status" data-status="IN_REVIEW"><span class="dot"></span>กำลังตรวจสอบ</span></td>
+              <td data-iso="2026-12-09T16:30:00+07:00">9 ธ.ค. 2569 16:30</td>
+              <td><span class="sla sla-normal" data-testid="row-sla-level" data-level="normal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>ปกติ</span></td>
+              <td style="text-align: right"><a href="CaseDetail.dc.html" class="btn btn-secondary btn-sm">ดูคำขอ</a></td>
+            </tr>
+            <tr data-testid="case-row" data-case-no="EG-2569-000013">
+              <td><a href="CaseDetail.dc.html" class="mono">EG-2569-000013</a></td>
+              <td>ขออนุญาตประกอบกิจการ</td>
+              <td>฿500</td>
+              <td><span class="badge st-IN_REVIEW" data-testid="case-status" data-status="IN_REVIEW"><span class="dot"></span>กำลังตรวจสอบ</span></td>
+              <td data-iso="2026-12-04T16:30:00+07:00">4 ธ.ค. 2569 16:30</td>
+              <td><span class="sla sla-normal" data-testid="row-sla-level" data-level="normal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>ปกติ</span></td>
+              <td style="text-align: right"><a href="CaseDetail.dc.html" class="btn btn-secondary btn-sm">ดูคำขอ</a></td>
+            </tr>
+            <tr data-testid="case-row" data-case-no="EG-2569-000011">
+              <td><a href="CaseDetail.dc.html" class="mono">EG-2569-000011</a></td>
+              <td>ขออนุญาตก่อสร้าง/ต่อเติมอาคาร<div class="muted">150 ตร.ม. · ขั้นตอน 3/3 หัวหน้าฝ่าย</div></td>
+              <td>฿1,500</td>
+              <td><span class="badge st-PENDING_APPROVAL" data-testid="case-status" data-status="PENDING_APPROVAL"><span class="dot"></span>รออนุมัติ</span></td>
+              <td data-iso="2026-12-08T16:30:00+07:00">8 ธ.ค. 2569 16:30</td>
+              <td><span class="sla sla-normal" data-testid="row-sla-level" data-level="normal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>ปกติ</span></td>
+              <td style="text-align: right"><a href="CaseDetail.dc.html" class="btn btn-secondary btn-sm">ดูคำขอ</a></td>
+            </tr>
+            <tr data-testid="case-row" data-case-no="EG-2569-000005">
+              <td><a href="CaseDetail.dc.html" class="mono">EG-2569-000005</a></td>
+              <td>ขอหนังสือรับรอง<div class="muted">1 ฉบับ</div></td>
+              <td>฿20</td>
+              <td><span class="badge st-COMPLETED" data-testid="case-status" data-status="COMPLETED"><span class="dot"></span>เสร็จสิ้น</span></td>
+              <td class="muted">ปิด 5 พ.ย. 2569</td>
+              <td><span class="sla sla-closed" data-testid="row-sla-level" data-level="closed">ปิดแล้ว</span></td>
+              <td style="text-align: right"><a href="Verify.dc.html" class="btn btn-secondary btn-sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg>เอกสาร</a></td>
+            </tr>
+            <tr data-testid="case-row" data-case-no="EG-2569-000004">
+              <td><a href="CaseDetail.dc.html" class="mono">EG-2569-000004</a></td>
+              <td>ขออนุญาตประกอบกิจการ</td>
+              <td>฿500</td>
+              <td><span class="badge st-COMPLETED" data-testid="case-status" data-status="COMPLETED"><span class="dot"></span>เสร็จสิ้น</span></td>
+              <td class="muted">ปิด 13 พ.ย. 2569</td>
+              <td><span class="sla sla-closed" data-testid="row-sla-level" data-level="closed">ปิดแล้ว</span></td>
+              <td style="text-align: right"><a href="CaseDetail.dc.html" class="btn btn-secondary btn-sm">ดูคำขอ</a></td>
+            </tr>
+            <tr data-testid="case-row" data-case-no="EG-2569-000009">
+              <td><a href="CaseDetail.dc.html" class="mono">EG-2569-000009</a></td>
+              <td>ขอหนังสือรับรอง<div class="muted">1 ฉบับ</div></td>
+              <td>฿20</td>
+              <td><span class="badge st-CANCELLED" data-testid="case-status" data-status="CANCELLED"><span class="dot"></span>ยกเลิก</span></td>
+              <td class="muted">ยกเลิก 9 พ.ย. 2569</td>
+              <td><span class="sla sla-closed" data-testid="row-sla-level" data-level="closed">ปิดแล้ว</span></td>
+              <td style="text-align: right"><a href="CaseDetail.dc.html" class="btn btn-secondary btn-sm">ดูคำขอ</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin: 0">สถานะแสดงทั้งข้อความและสี · กำหนดเสร็จนับเฉพาะวันทำการ ตัดรอบ 16:30 น.</p>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

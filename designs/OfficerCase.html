@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>ตรวจคำขอ (เจ้าหน้าที่)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<script type="text/x-dc-template">
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0;background:#F3F5F7}
+*{box-sizing:border-box}
+a{color:#0B5CAD}a:hover{color:#08457F}
+.mono{font-family:'IBM Plex Mono',monospace}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:8px;font:600 16px/1 'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn-primary{background:#0B5CAD;color:#fff}.btn-primary:hover{background:#08457F;color:#fff}
+.btn-approve{background:#1D6430;color:#fff}
+.btn-secondary{background:#fff;color:#0B5CAD;border-color:#B9CCE0}
+.btn-warn{background:#fff;color:#8A3F00;border-color:#E0A458}
+.btn-danger{background:#fff;color:#A1261D;border-color:#E3B4AF}
+.btn-sm{min-height:40px;padding:0 14px;font-size:14px}
+.nav a{font-size:15px;font-weight:500;color:#3D4853;text-decoration:none;padding:10px 4px;border-bottom:3px solid transparent}
+.nav a.on{color:#0B5CAD;border-bottom-color:#0B5CAD}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font:600 14px/1.4 'IBM Plex Sans Thai',sans-serif;white-space:nowrap;border:1px solid transparent}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.st-IN_REVIEW{background:#EEEAFB;color:#46338F;border-color:#D2C8F2}
+.st-APPROVED{background:#E4F3E7;color:#1D6430;border-color:#B7DDBF}
+.sla{display:inline-flex;align-items:center;gap:6px;font:600 14px/1.4 'IBM Plex Sans Thai',sans-serif;white-space:nowrap}
+.sla-normal{color:#3D4853}
+.sla-near{color:#8A3F00;background:#FDEBD3;padding:3px 10px;border-radius:6px}
+.muted{color:#56616C;font-size:14px}
+.card{background:#FFFFFF;border:1px solid #DCE2E8;border-radius:16px;padding:24px}
+.doc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:12px 14px;border:1px solid #E4E8EC;border-radius:10px}
+.label{font:600 15px/1.4 'IBM Plex Sans Thai',sans-serif;color:#13202B}
+.input{width:100%;height:44px;border:1px solid #8E9AA6;border-radius:8px;padding:0 12px;font:16px/1 'IBM Plex Sans Thai',sans-serif;color:#13202B;background:#fff}
+textarea{width:100%;min-height:84px;border:1px solid #8E9AA6;border-radius:8px;padding:10px 12px;font:16px/1.5 'IBM Plex Sans Thai',sans-serif;color:#13202B;resize:vertical}
+.ta-err{border:2px solid #A1261D}
+.err{font-size:14px;line-height:1.5;color:#A1261D;display:flex;gap:8px;align-items:flex-start;font-weight:500;margin:0}
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.tl li{display:flex;flex-direction:column;gap:2px;padding-left:14px;border-left:3px solid #DCE2E8}
+.pipe{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;font-weight:600}
+.pipe span.s{padding:6px 12px;border-radius:999px;background:#EDF1F4;color:#3D4853}
+.pipe span.done{background:#E4F3E7;color:#1D6430}
+.pipe span.cur{background:#0B5CAD;color:#fff}
+</style>
+</helmet>
+<div style="min-height: 1640px; background: #F3F5F7; font-family: 'IBM Plex Sans Thai', sans-serif; color: #13202B">
+  <header style="background: #FFFFFF; border-bottom: 1px solid #DCE2E8">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 10px 24px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px">
+      <a href="Main.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #13202B; padding-bottom: 10px">
+        <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#0B5CAD"></circle><path d="M11 17h18M12 28h16M13 17v9M18 17v9M22 17v9M27 17v9M10 31h20M20 9l10 6H10z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+        <span style="display: flex; flex-direction: column; line-height: 1.25"><strong style="font-size: 17px">e-Service กลาง</strong><span style="font-size: 13px; color: #56616C">ระบบเจ้าหน้าที่</span></span>
+      </a>
+      <nav class="nav" aria-label="เมนูเจ้าหน้าที่" style="display: flex; gap: 24px; align-self: flex-end">
+        <a href="OfficerQueue.html">คิวงาน</a>
+        <a href="OfficerCase.html" class="on" aria-current="page">คำขอที่เปิดล่าสุด</a>
+      </nav>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 16px; padding-bottom: 10px">
+        <span style="display: flex; flex-direction: column; line-height: 1.3; text-align: right"><span data-testid="user-name" data-role="officer" style="font-size: 15px; font-weight: 600">{{viewer}}</span><span class="muted" style="font-size: 13px">{{viewerDept}}</span></span>
+        <a href="Main.html" style="font-size: 15px">ออกจากระบบ</a>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 24px 24px 56px; display: flex; flex-direction: column; gap: 24px">
+    <a href="OfficerQueue.html" style="font-size: 15px; display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; min-height: 44px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>กลับไปคิวงาน</a>
+
+    <section class="card" style="display: flex; flex-direction: column; gap: 18px">
+      <div style="display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center">
+        <h1 style="margin: 0; font-size: 28px" class="mono" data-testid="case-no">{{caseNo}}</h1>
+        <span class="{{stCls}}" data-testid="case-status" data-status="{{status}}"><span class="dot"></span>{{stText}}</span>
+        <span class="{{slaCls}}" data-testid="sla-level" data-level="{{slaCode}}">{{slaText}}</span>
+      </div>
+      <sc-if value="{{isSV03}}" hint-placeholder-val="{{ false }}">
+        <div class="pipe" aria-label="เส้นทางของคำขอ">
+          <span class="s done">1 ฝ่ายทะเบียน</span><span aria-hidden="true">→</span><span class="s cur" data-testid="case-step">ขั้นตอน 2/3 · ฝ่ายโยธา</span><span aria-hidden="true">→</span><span class="s">3 หัวหน้าฝ่าย</span>
+        </div>
+      </sc-if>
+      <dl style="margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px">
+        <div><dt class="muted">บริการ</dt><dd style="margin: 4px 0 0; font-weight: 600" data-testid="case-service">{{service}}</dd></div>
+        <div><dt class="muted">ข้อมูลที่กรอก · ค่าธรรมเนียม</dt><dd style="margin: 4px 0 0; font-weight: 600">{{detail}} · <span data-testid="case-fee">{{fee}}</span></dd></div>
+        <div><dt class="muted">กำหนดเสร็จ</dt><dd style="margin: 4px 0 0; font-weight: 600" data-testid="sla-due" data-iso="{{dueIso}}">{{due}}</dd></div>
+        <div><dt class="muted">ผู้ถือเรื่อง</dt><dd style="margin: 4px 0 0; font-weight: 600" data-testid="case-owner">{{owner}}</dd></div>
+        <div><dt class="muted">ตีกลับแล้ว</dt><dd style="margin: 4px 0 0; font-weight: 600"><span data-testid="return-count">{{returnCount}}</span> / 2 ครั้ง</dd></div>
+      </dl>
+    </section>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <div style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+
+        <section class="card" aria-labelledby="app-title" style="display: flex; flex-direction: column; gap: 16px">
+          <h2 id="app-title" style="margin: 0; font-size: 19px">ผู้ยื่นคำขอ</h2>
+          <dl style="margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
+            <div><dt class="muted">ชื่อ-นามสกุล</dt><dd style="margin: 4px 0 0; font-size: 17px; font-weight: 600" data-testid="applicant-name">{{applicant}}</dd></div>
+            <div><dt class="muted">เลขประจำตัวประชาชน</dt><dd style="margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center"><span class="mono" style="font-size: 17px" data-testid="applicant-id">{{masked}}</span><button type="button" class="btn btn-secondary btn-sm" data-testid="show-full-id-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>แสดงเลขเต็ม</button></dd></div>
+          </dl>
+          <sc-if value="{{showUnmask}}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; padding: 16px; border-radius: 12px; background: #F7F9FA; border: 1px solid #E4E8EC">
+              <div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 6px">
+                <label class="label" for="unmask-reason">เหตุผลที่ต้องดูเลขเต็ม (บันทึกใน Audit)</label>
+                <input id="unmask-reason" class="input" data-testid="unmask-reason" placeholder="เช่น ตรวจสอบกับทะเบียนราษฎร">
+              </div>
+              <button type="button" class="btn btn-primary btn-sm" data-testid="unmask-submit">ยืนยัน</button>
+              <p class="err" data-testid="unmask-error" style="flex-basis: 100%">กรุณากรอกเหตุผล</p>
+            </div>
+          </sc-if>
+        </section>
+
+        <section class="card" aria-labelledby="docs-title" style="display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline">
+            <h2 id="docs-title" style="margin: 0; font-size: 19px">ตรวจเอกสารแนบ</h2>
+            <span class="muted">เปิดได้เฉพาะแผนกที่เกี่ยวข้องและหัวหน้าฝ่าย</span>
+          </div>
+          <sc-for list="{{docs}}" as="d" hint-placeholder-count="2">
+            <div class="doc" data-testid="doc-item" data-name="{{d.file}}" data-file-id="{{d.id}}">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B5CAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>
+              <span style="flex: 1 1 200px; display: flex; flex-direction: column"><span style="font-weight: 600">{{d.name}}</span><span class="muted">{{d.file}} · {{d.size}}</span></span>
+              <label style="display: inline-flex; gap: 8px; align-items: center; font-size: 14px; min-height: 40px; cursor: pointer"><input type="checkbox" style="width: 20px; height: 20px; accent-color: #1D6430">ตรวจแล้วถูกต้อง</label>
+              <a href="#" class="btn btn-secondary btn-sm" data-testid="doc-download-link">เปิดดู</a>
+            </div>
+          </sc-for>
+        </section>
+
+        <section aria-labelledby="act-title" style="background: #FFFFFF; border: 2px solid #0B5CAD; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 18px">
+          <h2 id="act-title" style="margin: 0; font-size: 19px">บันทึกผลการพิจารณา</h2>
+
+          <sc-if value="{{isReview}}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; flex-direction: column; gap: 18px">
+              <div style="display: flex; flex-wrap: wrap; gap: 12px">
+                <button type="button" class="btn btn-approve" data-testid="approve-btn">อนุมัติ</button>
+                <button type="button" class="btn btn-warn" data-testid="return-btn">ตีกลับ</button>
+                <button type="button" class="btn btn-danger" data-testid="reject-btn">ไม่อนุมัติ</button>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px; padding: 18px; border-radius: 12px; background: #FDF6EC; border: 1px solid #F0C48E">
+                <label class="label" for="return-reason">เหตุผลที่ตีกลับ (ประชาชนจะเห็นข้อความนี้)</label>
+                <textarea id="return-reason" class="ta-err" data-testid="return-reason">ภาพไม่ชัด</textarea>
+                <div style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+                  <p class="err" data-testid="return-reason-error"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 2px"><circle cx="12" cy="12" r="10"></circle><path d="M12 7v6M12 17h.01"></path></svg>กรุณากรอกเหตุผลอย่างน้อย 10 ตัวอักษร</p>
+                  <span class="muted mono">9 / 10</span>
+                </div>
+                <p class="muted" style="margin: 0">ประชาชนมีเวลาแก้ไข 7 วัน · ระหว่างนั้นหยุดนับ SLA · ตีกลับได้อีก 2 ครั้ง</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap"><button type="button" class="btn btn-primary btn-sm" data-testid="return-submit">ยืนยันตีกลับ</button><button type="button" class="btn btn-secondary btn-sm">ยกเลิก</button></div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isLimit}}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 16px">
+              <p role="status" style="margin: 0; padding: 12px 14px; border-radius: 8px; background: #EDF1F4; font-size: 15px">ตีกลับครบ 2 ครั้งแล้ว ตีกลับเพิ่มไม่ได้ · ขอหนังสือรับรองพิจารณาอนุมัติหรือไม่อนุมัติได้เลย</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 12px">
+                <button type="button" class="btn btn-approve" data-testid="approve-btn">อนุมัติ</button>
+                <button type="button" class="btn btn-danger" data-testid="reject-btn">ไม่อนุมัติ</button>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px; padding: 18px; border-radius: 12px; background: #FFF8F7; border: 1px solid #EDBBB6">
+                <label class="label" for="reject-reason">เหตุผลที่ไม่อนุมัติ</label>
+                <textarea id="reject-reason" data-testid="reject-reason">ข้อมูลในแบบฟอร์มไม่ตรงกับทะเบียนราษฎร</textarea>
+                <span class="muted">อย่างน้อย 10 ตัวอักษร · ปิดงานและหยุดนับ SLA ทันที · ไม่คืนค่าธรรมเนียม</span>
+                <button type="button" class="btn btn-sm" data-testid="reject-submit" style="align-self: flex-start; background: #A1261D; color: #fff">ยืนยันไม่อนุมัติ</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isForward}}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 16px">
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <label class="label" for="forward-note">หมายเหตุถึงขั้นถัดไป <span class="muted" style="font-weight: 400">(ไม่บังคับ)</span></label>
+                <textarea id="forward-note" data-testid="forward-note">แบบแปลนผ่านการตรวจโครงสร้างแล้ว</textarea>
+              </div>
+              <p style="margin: 0; padding: 12px 14px; border-radius: 8px; background: #F3F7FB; border: 1px solid #D7E4F1; font-size: 15px">ส่งต่ออัตโนมัติไปที่ <strong>หัวหน้าฝ่าย</strong> ตามเส้นทางของบริการ (เลือกปลายทางเองไม่ได้)</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 12px">
+                <button type="button" class="btn btn-primary" data-testid="forward-btn">ผ่าน/ส่งต่อ</button>
+                <button type="button" class="btn btn-warn" data-testid="return-btn">ตีกลับ</button>
+              </div>
+              <p class="muted" style="margin: 0">ขออนุญาตก่อสร้าง อนุมัติได้โดยหัวหน้าฝ่ายเท่านั้น</p>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{isIssue}}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 16px">
+              <p style="margin: 0; font-size: 15px">หัวหน้าฝ่ายอนุมัติเมื่อ 30 พ.ย. 2569 15:00 · คุณเป็นผู้ออกเอกสาร (ผู้รับเรื่องขั้นแรก)</p>
+              <button type="button" class="btn btn-primary" data-testid="issue-btn" style="align-self: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>ออกเอกสารพร้อมลายเซ็นดิจิทัล</button>
+              <div style="display: flex; flex-wrap: wrap; gap: 24px; padding: 20px; border-radius: 14px; border: 1px solid #B7DDBF; background: #F4FAF5">
+                <div data-testid="doc-qr" data-url="/verify/P4T8W2NC" role="img" aria-label="QR สำหรับตรวจสอบเอกสาร" style="width: 132px; height: 132px; flex: none; background: #fff; border: 1px solid #DCE2E8; border-radius: 8px; display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); padding: 8px; gap: 0">
+                  <sc-for list="{{qr}}" as="c" hint-placeholder-count="121"><span style="background: {{c.bg}}"></span></sc-for>
+                </div>
+                <dl style="margin: 0; flex: 1 1 280px; display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 15px">
+                  <dt class="muted">เลขเอกสาร</dt><dd style="margin: 0; font-weight: 600" class="mono" data-testid="doc-no">DOC-2569-000002</dd>
+                  <dt class="muted">รหัสตรวจสอบ</dt><dd style="margin: 0; font-weight: 600; letter-spacing: 0.08em" class="mono" data-testid="verify-code">P4T8W2NC</dd>
+                  <dt class="muted">ผู้ลงนาม</dt><dd style="margin: 0">หัวหน้าฝ่าย (ผู้อนุมัติ)</dd>
+                  <dt class="muted">ใช้ได้ถึง</dt><dd style="margin: 0">30 พ.ย. 2570 (1 ปี)</dd>
+                </dl>
+              </div>
+            </div>
+          </sc-if>
+        </section>
+      </div>
+
+      <aside style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+        <section class="card" aria-labelledby="tl-title" style="display: flex; flex-direction: column; gap: 14px">
+          <h2 id="tl-title" style="margin: 0; font-size: 18px">ประวัติคำขอ</h2>
+          <ol class="tl" data-testid="case-timeline">
+            <sc-for list="{{timeline}}" as="t" hint-placeholder-count="4">
+              <li data-testid="timeline-item" data-iso="{{t.iso}}"><strong style="font-size: 15px">{{t.title}}</strong><span class="muted">{{t.when}}</span><span style="font-size: 14px; color: #3D4853">{{t.note}}</span></li>
+            </sc-for>
+          </ol>
+        </section>
+        <section class="card" style="display: flex; flex-direction: column; gap: 8px; background: #F7F9FA">
+          <h2 style="margin: 0; font-size: 16px">ทุกการกระทำถูกบันทึก</h2>
+          <p class="muted" style="margin: 0">รับเรื่อง ตีกลับ ส่งต่อ อนุมัติ ไม่อนุมัติ ออกเอกสาร และการดูเลขบัตรเต็ม บันทึกใน Audit Trail พร้อมเวลาและเหตุผล</p>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+</script>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["review","return-limit","forward-sv03","issue"],"default":"review","section":"ตัวอย่างสถานะ"},"showUnmaskForm":{"editor":"boolean","default":true,"section":"ตัวอย่างสถานะ"},"$preview":{"width":1280,"height":1640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const v = this.props.variant ?? 'review';
+    const D = {
+      review: { viewer: 'เจ้าหน้าที่ทะเบียน 1', viewerDept: 'ฝ่ายทะเบียน', caseNo: 'EG-2569-000022', status: 'IN_REVIEW', stText: 'กำลังตรวจสอบ', stCls: 'badge st-IN_REVIEW', slaCode: 'near', slaText: 'ใกล้ครบกำหนด', slaCls: 'sla sla-near', service: 'SV-01 ขอหนังสือรับรอง', detail: '2 ฉบับ', fee: '฿40', due: '1 ธ.ค. 2569 16:30', dueIso: '2026-12-01T16:30:00+07:00', owner: 'off.reg1', returnCount: '0', applicant: 'สมหญิง รักไทย', masked: 'X-XXXX-XXXXX-65-9',
+        docs: [{ name: 'บัตรประชาชน', file: 'id-card.pdf', size: '182 KB', id: 'f-022-1' }],
+        timeline: [{ title: 'รับเรื่อง', when: '26 พ.ย. 2569 13:00', note: 'off.reg1', iso: '2026-11-26T13:00:00+07:00' }, { title: 'ชำระเงิน · ส่งคำขอแล้ว', when: '26 พ.ย. 2569 10:00', note: 'RC-2569-000022 · ฿40', iso: '2026-11-26T10:00:00+07:00' }] },
+      'return-limit': { viewer: 'เจ้าหน้าที่ทะเบียน 1', viewerDept: 'ฝ่ายทะเบียน', caseNo: 'EG-2569-000023', status: 'IN_REVIEW', stText: 'กำลังตรวจสอบ', stCls: 'badge st-IN_REVIEW', slaCode: 'normal', slaText: 'ปกติ', slaCls: 'sla sla-normal', service: 'SV-01 ขอหนังสือรับรอง', detail: '1 ฉบับ', fee: '฿20', due: '3 ธ.ค. 2569 16:30', dueIso: '2026-12-03T16:30:00+07:00', owner: 'off.reg1', returnCount: '2', applicant: 'สมหญิง รักไทย', masked: 'X-XXXX-XXXXX-65-9',
+        docs: [{ name: 'บัตรประชาชน', file: 'id-card.pdf', size: '210 KB', id: 'f-023-1' }],
+        timeline: [{ title: 'ส่งแก้ไข (ครั้งที่ 2)', when: '1 ธ.ค. 2569 08:30', note: 'ประชาชนแนบไฟล์ใหม่', iso: '2026-12-01T08:30:00+07:00' }, { title: 'ตีกลับ (ครั้งที่ 2)', when: '30 พ.ย. 2569 14:00', note: 'ข้อมูลในแบบฟอร์มไม่ครบถ้วน', iso: '2026-11-30T14:00:00+07:00' }, { title: 'ส่งแก้ไข (ครั้งที่ 1)', when: '30 พ.ย. 2569 10:00', note: '', iso: '2026-11-30T10:00:00+07:00' }, { title: 'ตีกลับ (ครั้งที่ 1)', when: '27 พ.ย. 2569 10:00', note: 'ภาพเอกสารเบลอ อ่านเลขไม่ได้', iso: '2026-11-27T10:00:00+07:00' }] },
+      'forward-sv03': { viewer: 'เจ้าหน้าที่โยธา 1', viewerDept: 'ฝ่ายโยธา', caseNo: 'EG-2569-000010', status: 'IN_REVIEW', stText: 'กำลังตรวจสอบ', stCls: 'badge st-IN_REVIEW', slaCode: 'normal', slaText: 'ปกติ', slaCls: 'sla sla-normal', service: 'SV-03 ขออนุญาตก่อสร้าง/ต่อเติมอาคาร', detail: '80 ตร.ม.', fee: '฿1,000', due: '3 ธ.ค. 2569 16:30', dueIso: '2026-12-03T16:30:00+07:00', owner: 'off.works1', returnCount: '0', applicant: 'สมหญิง รักไทย', masked: 'X-XXXX-XXXXX-65-9',
+        docs: [{ name: 'บัตรประชาชน', file: 'id-card.pdf', size: '182 KB', id: 'f-010-1' }, { name: 'แบบแปลน', file: 'plan.pdf', size: '4.8 MB', id: 'f-010-2' }, { name: 'โฉนด', file: 'deed.pdf', size: '640 KB', id: 'f-010-3' }],
+        timeline: [{ title: 'ส่งต่อถึงฝ่ายโยธา', when: '20 พ.ย. 2569 11:00', note: 'จาก off.reg1 · เอกสารครบ', iso: '2026-11-20T11:00:00+07:00' }, { title: 'รับเรื่อง (ฝ่ายทะเบียน)', when: '12 พ.ย. 2569 13:00', note: 'off.reg1', iso: '2026-11-12T13:00:00+07:00' }, { title: 'ชำระเงิน · ส่งคำขอแล้ว', when: '12 พ.ย. 2569 10:00', note: 'RC-2569-000010 · ฿1,000', iso: '2026-11-12T10:00:00+07:00' }] },
+      issue: { viewer: 'เจ้าหน้าที่ทะเบียน 1', viewerDept: 'ฝ่ายทะเบียน', caseNo: 'EG-2569-000019', status: 'APPROVED', stText: 'อนุมัติ', stCls: 'badge st-APPROVED', slaCode: 'normal', slaText: 'ปกติ', slaCls: 'sla sla-normal', service: 'SV-02 ขออนุญาตประกอบกิจการ', detail: 'กิจการทั่วไป', fee: '฿500', due: '9 ธ.ค. 2569 16:30', dueIso: '2026-12-09T16:30:00+07:00', owner: 'รอออกเอกสาร (off.reg1)', returnCount: '0', applicant: 'สมหญิง รักไทย', masked: 'X-XXXX-XXXXX-65-9',
+        docs: [{ name: 'บัตรประชาชน', file: 'id-card.pdf', size: '182 KB', id: 'f-019-1' }, { name: 'แผนที่ตั้ง', file: 'map.pdf', size: '1.2 MB', id: 'f-019-2' }],
+        timeline: [{ title: 'อนุมัติ', when: '30 พ.ย. 2569 15:00', note: 'head1', iso: '2026-11-30T15:00:00+07:00' }, { title: 'ส่งต่อถึงหัวหน้าฝ่าย', when: '27 พ.ย. 2569 10:00', note: 'จาก off.reg1', iso: '2026-11-27T10:00:00+07:00' }, { title: 'ชำระเงิน · ส่งคำขอแล้ว', when: '24 พ.ย. 2569 14:00', note: 'RC-2569-000019 · ฿500', iso: '2026-11-24T14:00:00+07:00' }] }
+    };
+    const d = D[v] || D.review;
+    const qr = [];
+    for (let r = 0; r < 11; r++) for (let c = 0; c < 11; c++) {
+      const corner = (r < 3 && c < 3) || (r < 3 && c > 7) || (r > 7 && c < 3);
+      const on = corner ? !(r % 10 === 1 && c % 10 === 1) && !((r === 1 && c === 9) || (r === 9 && c === 1)) : ((r * 13 + c * 7 + r * c) % 3 === 0);
+      qr.push({ bg: on ? '#13202B' : '#FFFFFF' });
+    }
+    return Object.assign({}, d, {
+      isReview: v === 'review', isLimit: v === 'return-limit', isForward: v === 'forward-sv03', isIssue: v === 'issue',
+      isSV03: v === 'forward-sv03',
+      showUnmask: this.props.showUnmaskForm ?? true,
+      qr
+    });
+  }
+}
+</script>
+</body>
+</html>

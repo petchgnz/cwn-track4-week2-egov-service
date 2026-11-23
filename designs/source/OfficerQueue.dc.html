@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>คิวงานฝ่ายทะเบียน</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0;background:#F3F5F7}
+*{box-sizing:border-box}
+a{color:#0B5CAD}a:hover{color:#08457F}
+.mono{font-family:'IBM Plex Mono',monospace}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:8px;font:600 15px/1 'IBM Plex Sans Thai',sans-serif;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn-primary{background:#0B5CAD;color:#fff}.btn-primary:hover{background:#08457F;color:#fff}
+.btn-secondary{background:#fff;color:#0B5CAD;border-color:#B9CCE0}
+.btn-sm{min-height:40px;padding:0 14px;font-size:14px}
+.nav a{font-size:15px;font-weight:500;color:#3D4853;text-decoration:none;padding:10px 4px;border-bottom:3px solid transparent}
+.nav a.on{color:#0B5CAD;border-bottom-color:#0B5CAD}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font:600 13px/1.4 'IBM Plex Sans Thai',sans-serif;white-space:nowrap;border:1px solid transparent}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.st-SUBMITTED{background:#E3EEF9;color:#0A4A8A;border-color:#B9CCE0}
+.st-IN_REVIEW{background:#EEEAFB;color:#46338F;border-color:#D2C8F2}
+.st-APPROVED{background:#E4F3E7;color:#1D6430;border-color:#B7DDBF}
+.sla{display:inline-flex;align-items:center;gap:6px;font:600 13px/1.4 'IBM Plex Sans Thai',sans-serif;white-space:nowrap}
+.sla-normal{color:#3D4853}
+.sla-near{color:#8A3F00;background:#FDEBD3;padding:3px 10px;border-radius:6px}
+.sla-overdue{color:#FFFFFF;background:#B3261E;padding:3px 10px;border-radius:6px}
+.t{width:100%;border-collapse:collapse;font-size:15px;min-width:1040px}
+.t th{text-align:left;font-weight:600;font-size:13px;color:#56616C;padding:12px 14px;border-bottom:1px solid #DCE2E8;background:#F7F9FA;white-space:nowrap}
+.t td{padding:12px 14px;border-bottom:1px solid #EDF0F3;vertical-align:middle}
+.t .mono{white-space:nowrap}
+.t tr:last-child td{border-bottom:0}
+.row-overdue td{background:#FFF6F5}
+.row-overdue td:first-child{box-shadow:inset 4px 0 0 #B3261E}
+.row-near td:first-child{box-shadow:inset 4px 0 0 #D9822B}
+.muted{color:#56616C;font-size:14px}
+.filter{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid #C9D1D8;background:#fff;font:500 14px/1 'IBM Plex Sans Thai',sans-serif;color:#3D4853;cursor:pointer}
+.filter-on{background:#13202B;color:#fff;border-color:#13202B}
+.kpi{background:#FFFFFF;border:1px solid #DCE2E8;border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.kpi strong{font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}
+.bell{position:relative;width:44px;height:44px;border-radius:10px;border:1px solid #DCE2E8;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#13202B}
+.bell-count{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#B3261E;color:#fff;font:700 12px/22px 'IBM Plex Sans Thai',sans-serif;text-align:center}
+.noti{display:flex;gap:12px;padding:12px 16px;border-top:1px solid #EDF0F3;text-decoration:none;color:#13202B}
+.noti:hover{background:#F7F9FA;color:#13202B}
+</style>
+</helmet>
+<div style="min-height: 1300px; background: #F3F5F7; font-family: 'IBM Plex Sans Thai', sans-serif; color: #13202B">
+  <header style="background: #FFFFFF; border-bottom: 1px solid #DCE2E8; position: relative">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 10px 24px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #13202B; padding-bottom: 10px">
+        <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#0B5CAD"></circle><path d="M11 17h18M12 28h16M13 17v9M18 17v9M22 17v9M27 17v9M10 31h20M20 9l10 6H10z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"></path></svg>
+        <span style="display: flex; flex-direction: column; line-height: 1.25"><strong style="font-size: 17px">e-Service กลาง</strong><span style="font-size: 13px; color: #56616C">ระบบเจ้าหน้าที่</span></span>
+      </a>
+      <nav class="nav" aria-label="เมนูเจ้าหน้าที่" style="display: flex; gap: 24px; align-self: flex-end">
+        <a href="OfficerQueue.dc.html" class="on" aria-current="page">คิวงาน</a>
+        <a href="OfficerCase.dc.html">คำขอที่เปิดล่าสุด</a>
+      </nav>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 16px; padding-bottom: 10px">
+        <span style="font-size: 13px; padding: 4px 10px; border-radius: 999px; background: #FFF4E0; color: #7A4100; border: 1px solid #F1D3A1">1 ธ.ค. 2569 09:00</span>
+        <button type="button" class="bell" aria-label="แจ้งเตือน 3 รายการ" aria-expanded="{{bellExpanded}}" onClick="{{toggleBell}}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+          <span class="bell-count" data-testid="bell-count">3</span>
+        </button>
+        <span style="display: flex; flex-direction: column; line-height: 1.3; text-align: right"><span data-testid="user-name" data-role="officer" style="font-size: 15px; font-weight: 600">เจ้าหน้าที่ทะเบียน 1</span><span class="muted" style="font-size: 13px">ฝ่ายทะเบียน</span></span>
+        <a href="Main.dc.html" style="font-size: 15px">ออกจากระบบ</a>
+      </div>
+    </div>
+    <sc-if value="{{bellOpen}}" hint-placeholder-val="{{ true }}">
+      <div aria-label="แจ้งเตือน" style="position: absolute; right: max(24px, calc((100% - 1200px) / 2 + 24px)); top: 68px; width: min(400px, calc(100% - 32px)); background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 14px; box-shadow: 0 12px 32px rgba(19,32,43,0.14); z-index: 5; overflow: hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px">
+          <strong style="font-size: 16px">แจ้งเตือน SLA</strong>
+          <span class="muted">แจ้ง 1 ครั้งต่อระดับต่อคำขอ</span>
+        </div>
+        <a href="OfficerCase.dc.html" class="noti" data-testid="noti-item" data-case-no="EG-2569-000020" data-level="overdue">
+          <span style="flex: none; width: 10px; height: 10px; margin-top: 7px; border-radius: 50%; background: #B3261E"></span>
+          <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">คำขอ EG-2569-000020 เกินกำหนด</span><span class="muted">กำหนด 30 พ.ย. 2569 16:30 · แจ้งหัวหน้าฝ่ายแล้ว</span></span>
+        </a>
+        <a href="OfficerCase.dc.html" class="noti" data-testid="noti-item" data-case-no="EG-2569-000022" data-level="near">
+          <span style="flex: none; width: 10px; height: 10px; margin-top: 7px; border-radius: 50%; background: #D9822B"></span>
+          <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">คำขอ EG-2569-000022 ใกล้ครบกำหนด</span><span class="muted">กำหนด 1 ธ.ค. 2569 16:30 (วันนี้)</span></span>
+        </a>
+        <a href="OfficerCase.dc.html" class="noti" data-testid="noti-item" data-case-no="EG-2569-000024" data-level="near">
+          <span style="flex: none; width: 10px; height: 10px; margin-top: 7px; border-radius: 50%; background: #D9822B"></span>
+          <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">คำขอ EG-2569-000024 ใกล้ครบกำหนด</span><span class="muted">ยังไม่มีผู้รับ · แจ้งทุกคนในฝ่ายทะเบียน</span></span>
+        </a>
+      </div>
+    </sc-if>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 56px; display: flex; flex-direction: column; gap: 24px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <h1 style="margin: 0; font-size: 28px">คิวงานฝ่ายทะเบียน</h1>
+      <p class="muted" style="margin: 0; font-size: 15px">เรียงกำหนดเสร็จเร็วสุดก่อน · กำหนดเท่ากันเรียงเลขคำขอ</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px">
+      <div class="kpi"><span class="muted">งานในมือของฉัน</span><strong><span data-testid="workload-count">3</span><span style="font-size: 18px; color: #56616C; font-weight: 500"> / 10</span></strong><span style="height: 6px; border-radius: 3px; background: #E4E8EC; overflow: hidden"><span style="display: block; width: 30%; height: 100%; background: #0B5CAD"></span></span></div>
+      <div class="kpi"><span class="muted">เกินกำหนด</span><strong style="color: #B3261E">1</strong><span class="muted">ต้องเร่งดำเนินการ</span></div>
+      <div class="kpi"><span class="muted">ใกล้ครบกำหนด</span><strong style="color: #8A3F00">2</strong><span class="muted">เหลือ ≤ 1 วันทำการ</span></div>
+      <div class="kpi"><span class="muted">ยังไม่มีผู้รับ</span><strong>4</strong><span class="muted">รับได้อีก 7 เรื่อง</span></div>
+    </div>
+
+    <section aria-label="ตารางคิวงาน" style="background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 14px; overflow: hidden">
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid #EDF0F3">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px" data-testid="queue-filter">
+          <sc-for list="{{filters}}" as="f" hint-placeholder-count="3">
+            <button type="button" class="{{f.cls}}" aria-pressed="{{f.pressed}}" onClick="{{f.pick}}">{{f.label}}</button>
+          </sc-for>
+        </div>
+        <span class="muted">{{rowCount}} รายการ</span>
+      </div>
+      <div style="overflow-x: auto">
+        <table class="t" data-testid="queue-table">
+          <thead><tr><th scope="col">เลขคำขอ</th><th scope="col">บริการ</th><th scope="col">ผู้ยื่น</th><th scope="col">สถานะ</th><th scope="col">กำหนดเสร็จ</th><th scope="col">ระดับเตือน</th><th scope="col">ผู้ถือเรื่อง</th><th scope="col"><span style="position: absolute; left: -9999px">การดำเนินการ</span></th></tr></thead>
+          <tbody>
+            <sc-for list="{{rows}}" as="r" hint-placeholder-count="17">
+              <tr class="{{r.rowCls}}" data-testid="queue-row" data-case-no="{{r.no}}" data-owner="{{r.owner}}" data-status="{{r.status}}" data-sla-level="{{r.level}}">
+                <td><a href="OfficerCase.dc.html" class="mono" data-testid="row-case-no">{{r.no}}</a></td>
+                <td data-testid="row-service">{{r.svc}}</td>
+                <td><div data-testid="row-applicant">{{r.name}}</div><div class="muted mono" data-testid="row-id-masked" style="font-size: 13px">{{r.masked}}</div></td>
+                <td><span class="{{r.stCls}}" data-testid="row-status"><span class="dot"></span>{{r.stText}}</span></td>
+                <td data-testid="row-due" data-iso="{{r.iso}}" style="white-space: nowrap">{{r.due}}</td>
+                <td><span class="{{r.slaCls}}" data-testid="row-sla-level" data-level="{{r.level}}">{{r.slaText}}</span></td>
+                <td data-testid="row-owner" class="{{r.ownerCls}}">{{r.ownerText}}</td>
+                <td style="text-align: right">
+                  <sc-if value="{{r.canClaim}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn btn-primary btn-sm" data-testid="claim-btn">รับเรื่อง</button></sc-if>
+                  <sc-if value="{{r.canIssue}}" hint-placeholder-val="{{ false }}"><a href="OfficerCase.dc.html" class="btn btn-secondary btn-sm">ออกเอกสาร</a></sc-if>
+                  <sc-if value="{{r.isOpen}}" hint-placeholder-val="{{ true }}"><a href="OfficerCase.dc.html" class="btn btn-secondary btn-sm">เปิด</a></sc-if>
+                </td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <p class="muted" style="margin: 0">รับงานได้สูงสุด 10 เรื่องต่อคน · ถ้ามีคนรับเรื่องก่อน จะแสดง “มีเจ้าหน้าที่รับเรื่องนี้แล้ว” · เลขบัตรแสดงแบบปิดบังเสมอ</p>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"bellOpenDefault":{"editor":"boolean","default":true,"section":"ตัวอย่าง"},"$preview":{"width":1280,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const me = 'off.reg1';
+    const filter = s.filter ?? 'all';
+    const open = s.bell ?? (this.props.bellOpenDefault ?? true);
+    const P = {
+      a: ['สมชาย ใจดี', 'X-XXXX-XXXXX-45-6'],
+      b: ['สมหญิง รักไทย', 'X-XXXX-XXXXX-65-9'],
+      c: ['ปิติ มีสุข', 'X-XXXX-XXXXX-01-5']
+    };
+    const raw = [
+      ['000020', 'SV-01', 'a', 'IN_REVIEW', 'off.reg1', '30 พ.ย.', '2026-11-30', 'overdue'],
+      ['000022', 'SV-01', 'b', 'IN_REVIEW', 'off.reg1', '1 ธ.ค.', '2026-12-01', 'near'],
+      ['000024', 'SV-01', 'c', 'SUBMITTED', '', '2 ธ.ค.', '2026-12-02', 'near'],
+      ['000023', 'SV-01', 'b', 'IN_REVIEW', 'off.reg1', '3 ธ.ค.', '2026-12-03', 'normal'],
+      ['000025', 'SV-01', 'b', 'IN_REVIEW', 'off.reg2', '3 ธ.ค.', '2026-12-03', 'normal'],
+      ['000026', 'SV-01', 'a', 'IN_REVIEW', 'off.reg2', '3 ธ.ค.', '2026-12-03', 'normal'],
+      ['000013', 'SV-02', 'a', 'IN_REVIEW', 'off.reg2', '4 ธ.ค.', '2026-12-04', 'normal'],
+      ['000015', 'SV-02', 'b', 'IN_REVIEW', 'off.reg2', '4 ธ.ค.', '2026-12-04', 'normal'],
+      ['000027', 'SV-01', 'c', 'IN_REVIEW', 'off.reg2', '4 ธ.ค.', '2026-12-04', 'normal'],
+      ['000028', 'SV-01', 'b', 'SUBMITTED', '', '4 ธ.ค.', '2026-12-04', 'normal'],
+      ['000029', 'SV-01', 'c', 'SUBMITTED', '', '4 ธ.ค.', '2026-12-04', 'normal'],
+      ['000030', 'SV-01', 'a', 'SUBMITTED', '', '4 ธ.ค.', '2026-12-04', 'normal'],
+      ['000016', 'SV-02', 'c', 'IN_REVIEW', 'off.reg2', '8 ธ.ค.', '2026-12-08', 'normal'],
+      ['000018', 'SV-02', 'a', 'IN_REVIEW', 'off.reg2', '9 ธ.ค.', '2026-12-09', 'normal'],
+      ['000019', 'SV-02', 'b', 'APPROVED', '', '9 ธ.ค.', '2026-12-09', 'normal'],
+      ['000012', 'SV-03', 'c', 'IN_REVIEW', 'off.reg2', '11 ธ.ค.', '2026-12-11', 'normal'],
+      ['000021', 'SV-02', 'b', 'IN_REVIEW', 'off.reg2', '11 ธ.ค.', '2026-12-11', 'normal']
+    ];
+    const svc = { 'SV-01': 'หนังสือรับรอง', 'SV-02': 'ประกอบกิจการ', 'SV-03': 'ก่อสร้าง/ต่อเติม' };
+    const st = { SUBMITTED: 'ส่งคำขอแล้ว', IN_REVIEW: 'กำลังตรวจสอบ', APPROVED: 'อนุมัติ' };
+    const lv = { normal: 'ปกติ', near: 'ใกล้ครบกำหนด', overdue: 'เกินกำหนด' };
+    let rows = raw.map((x) => {
+      const unclaimed = x[4] === '' && x[3] !== 'APPROVED';
+      const issue = x[3] === 'APPROVED';
+      return {
+        no: 'EG-2569-' + x[0], svc: x[1] + ' ' + svc[x[1]],
+        name: P[x[2]][0], masked: P[x[2]][1],
+        status: x[3], stText: st[x[3]], stCls: 'badge st-' + x[3],
+        due: x[5] + ' 2569 16:30', iso: x[6] + 'T16:30:00+07:00',
+        level: x[7], slaText: lv[x[7]], slaCls: 'sla sla-' + x[7],
+        rowCls: x[7] === 'overdue' ? 'row-overdue' : (x[7] === 'near' ? 'row-near' : ''),
+        owner: x[4],
+        ownerText: issue ? 'รอออกเอกสาร' : (x[4] === '' ? 'ยังไม่มีผู้รับ' : (x[4] === me ? 'ฉัน (' + x[4] + ')' : x[4])),
+        ownerCls: x[4] === me ? '' : 'muted',
+        canClaim: unclaimed, canIssue: issue, isOpen: !unclaimed && !issue,
+        unclaimed, mine: x[4] === me && x[3] === 'IN_REVIEW'
+      };
+    });
+    if (filter === 'unclaimed') rows = rows.filter((r) => r.unclaimed);
+    if (filter === 'mine') rows = rows.filter((r) => r.mine);
+    const defs = [['all', 'ทั้งหมด 17'], ['unclaimed', 'ยังไม่มีผู้รับ 4'], ['mine', 'ของฉัน 3']];
+    const filters = defs.map((d) => ({
+      label: d[1], cls: d[0] === filter ? 'filter filter-on' : 'filter', pressed: String(d[0] === filter),
+      pick: () => this.setState({ filter: d[0] })
+    }));
+    return {
+      rows, rowCount: rows.length, filters,
+      bellOpen: open, bellExpanded: String(open),
+      toggleBell: () => this.setState({ bell: !open })
+    };
+  }
+}
+</script>
+</body>
+</html>
