@@ -1,0 +1,30 @@
+{
+  "name": "egov-eservice",
+  "version": "1.0.0",
+  "private": true,
+  "description": "e-Service กลาง เทศบาลนครตัวอย่าง (สมมติ) · Node.js 20 + Express + better-sqlite3 · SSR",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "start:test": "TEST_MODE=1 node src/server.js",
+    "test": "node --test test/",
+    "test:unit": "node --test test/",
+    "e2e": "playwright test",
+    "e2e:list": "playwright test --list"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "exceljs": "^4.4.0",
+    "express": "^4.22.0",
+    "multer": "^2.0.2",
+    "pdfkit": "^0.17.1",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.0",
+    "@playwright/test": "^1.55.0"
+  }
+}

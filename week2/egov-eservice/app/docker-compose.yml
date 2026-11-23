@@ -1,0 +1,32 @@
+# e-Service กลาง — รันคำสั่งเดียว:
+#   docker compose up --build                       → http://localhost:3000 (ใช้งานปกติ /api/test/* = 404)
+#   TEST_MODE=1 docker compose up --build           → เปิด /api/test/* (reset, clock, …) สำหรับ Playwright
+#   TEST_MODE=1 BUG_MODE=B03,B07 docker compose up --build   → เปิดบั๊กตาม BUGS.md
+# body limit ≥ 6 MB (CONTRACT §0 ข้อ 10) ตั้งใน src/server.js ผ่าน BODY_LIMIT (ค่าเริ่มต้น 12mb)
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: egov-eservice:latest
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      PORT: "3000"
+      TZ: Asia/Bangkok
+      TEST_MODE: "${TEST_MODE:-}"
+      BUG_MODE: "${BUG_MODE:-}"
+      DB_PATH: "${DB_PATH:-/data/egov.db}"
+      BODY_LIMIT: "${BODY_LIMIT:-12mb}"
+    volumes:
+      - egov-data:/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/api/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      start_period: 10s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  egov-data:

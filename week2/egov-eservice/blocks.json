@@ -1,0 +1,201 @@
+{
+ "goal": "สร้างเว็บ e-Service กลางตามชุดโจทย์ใน /workspace/egov-brief (อ่าน README.md ก่อน) ทำตาม REQUIREMENTS.md CONTRACT.md TEST-DATA.md DECISIONS.md ครบทุกข้อ รันด้วย Docker Compose คำสั่งเดียว รองรับ TEST_MODE=1 และ BUG_MODE ตาม BUGS.md และมีชุด Playwright ครบทุก TC ใน TEST-PLAN.md · stack: Node.js 20 + Express + better-sqlite3 (DB_PATH) + หน้าเว็บ render ฝั่งเซิร์ฟเวอร์ · โมดูลอยู่ใน app/src/modules/*.js ซึ่ง server.js โหลดอัตโนมัติ · กฎตัวเลขทั้งหมดเรียกผ่าน app/src/lib/rules.js · เวลาอ่านจาก app/src/lib/clock.js เท่านั้น · บั๊ก BUG_MODE ใส่ในโมดูลที่เป็นเจ้าของกฎนั้นผ่าน isBug('Bxx') จาก app/src/lib/bugmode.js",
+ "name": "egov-eservice",
+ "blocks": [
+  {
+   "id": "B01",
+   "title": "โครงโปรเจกต์ + Docker + DB schema + test hook",
+   "size": "L",
+   "depends_on": [],
+   "skill": "yolo",
+   "difficulty": 4,
+   "output": "docker-compose.yml",
+   "done": "docker compose up --build แล้ว GET /api/health = 200 · TEST_MODE=1 มี POST /api/test/reset และ PUT /api/test/clock ตาม CONTRACT §8 · ไม่ตั้ง TEST_MODE → /api/test/* = 404",
+   "detail": "อ่าน README CONTRACT (§0 §1 §2.1 §4 §5 §6.6 §6.7 §8) DECISIONS (§0 §5 §15) TEST-DATA (§1 §12) · สร้าง app/package.json Dockerfile docker-compose.yml (env TEST_MODE BUG_MODE DB_PATH TZ=Asia/Bangkok, body limit ≥ 6 MB) · app/src/server.js โหลด src/modules/*.js อัตโนมัติ · app/src/db/schema.sql ครบทุกตาราง (users services holidays drafts cases files payments receipts documents notifications audit otp_lock sessions) · app/src/lib/clock.js (now() จากนาฬิกาทดสอบ +07:00) · app/src/lib/bugmode.js (isBug) · app/src/lib/format.js (วันที่ พ.ศ. ย่อ, ฿1,010, data-iso) · app/src/lib/layout.js (เปลือกหน้า + testid ส่วนกลาง §2.1 + middleware requireRole ที่คืน 403 forbidden-msg/redirect /login) · reset เรียก app/src/seed.js ถ้ามี (บล็อก B02 เขียน) ล้าง session ทุกคน · หน้า placeholder ทุก route ใน §1",
+   "timeout": 4500
+  },
+  {
+   "id": "B02",
+   "title": "seed ข้อมูลหลัง reset ตาม TEST-DATA",
+   "size": "L",
+   "depends_on": [
+    "B01"
+   ],
+   "skill": "ayolo",
+   "difficulty": 3,
+   "output": "src/seed.js",
+   "done": "หลัง POST /api/test/reset มีบัญชี บริการ วันหยุด คำขอ 30 ใบ + ร่าง 2 ใบ เอกสาร 1 ใบ ใบเสร็จ audit และตัวนับเลขถัดไปตรง TEST-DATA ทุกข้อ (§1–§12) · ไฟล์ทดสอบจาก make_testfiles.py อยู่ที่ app/testfiles/",
+   "detail": "อ่าน TEST-DATA ทั้งไฟล์ + DECISIONS §17 + schema.sql ของ B01 · เขียนเฉพาะ app/src/seed.js และ app/testfiles/ · เลขบัตรทุกเลข checksum ถูก · ข้อมูลส่วนบุคคลเก็บแบบเข้ารหัสด้วยฟังก์ชันจาก app/src/lib/crypto.js ที่บล็อกนี้สร้าง (AES-256-GCM คีย์ทดสอบ)",
+   "timeout": 4500
+  },
+  {
+   "id": "B03",
+   "title": "กฎตัวเลขกลาง rules.js (ค่าธรรมเนียม · วันทำการ/SLA · ระดับเตือน · checksum · เลขคำขอ · อายุเอกสาร)",
+   "size": "M",
+   "depends_on": [
+    "B01"
+   ],
+   "skill": "review",
+   "difficulty": 4,
+   "output": "src/lib/rules.js",
+   "done": "ทุกตัวอย่างใน DECISIONS §2 §3 §6 §7 §8 §9 §10 ให้ผลตรง (เช่น SV-03 101 ตร.ม. = 1010 · ชำระ อ.1 ธ.ค. 16:30 SLA 3 → 2026-12-08T16:30+07:00) · ผู้ตรวจ (agy) ไล่ทุกค่าขอบใน DECISIONS §2–§10 กับ BUGS B01 B03 B04 B05 แล้วตอบ APPROVED",
+   "detail": "ฟังก์ชันบริสุทธิ์ รับ now/holidays เป็นพารามิเตอร์ · ใส่บั๊ก B01 (fee > 101) B03 (SLA ข้ามแค่ ส-อา) B04 (ไม่หยุดนับระหว่าง NEED_FIX) B05 (QR ≤ 15:00) ผ่าน isBug ตาม BUGS.md · เขียน unit test app/test/rules.test.js ด้วย (node --test) · ไม่แก้ไฟล์อื่น",
+   "worker": "yolo",
+   "max_rounds": 2,
+   "timeout": 3000
+  },
+  {
+   "id": "B05",
+   "title": "ยืนยันตัวตน + ลงทะเบียน + RBAC (ThaiD/SSO จำลอง)",
+   "size": "M",
+   "depends_on": [
+    "B01"
+   ],
+   "skill": "yolo",
+   "difficulty": 3,
+   "output": "src/modules/auth.js",
+   "done": "ล็อกอินประชาชนด้วยเลขบัตร+OTP 123456 · ผิด 3 ครั้งล็อก 15:00 · /register ตามกฎเบอร์/PDPA · SSO เจ้าหน้าที่ · redirect หน้าตั้งต้นตามบทบาท · testid ใน CONTRACT §2.2 §2.3 ครบ",
+   "detail": "อ่าน CONTRACT §1 §2.2 §2.3 §5 §6.1 DECISIONS §1 §2 · checksum เรียก rules.js ถ้ามี ถ้ายังไม่มีให้ import แบบ lazy · session cookie HttpOnly · บันทึก audit LOGIN ตาม CONTRACT §6.8",
+   "timeout": 3000
+  },
+  {
+   "id": "B06",
+   "title": "ฝั่งประชาชน: ยื่นคำขอ ร่าง อัปโหลด ชำระ QR ติดตาม แก้ไข ยกเลิก",
+   "size": "L",
+   "depends_on": [
+    "B03",
+    "B05"
+   ],
+   "skill": "yolo",
+   "difficulty": 4,
+   "output": "src/modules/citizen.js",
+   "done": "ยื่น SV-01/02/03 ครบวงจรจนได้เลข EG-2569-xxxxxx · ไฟล์ตรวจ magic bytes ≤ 5,242,880 ไบต์ ≤ 5 ไฟล์ · QR อายุ < 15:00 · callback ซ้ำ idempotent · ชำระพร้อมกันเลขไม่ซ้ำ · คำขอคนอื่น 404 · testid CONTRACT §2.4 §2.5 §2.6 ครบ",
+   "detail": "อ่าน CONTRACT §2.4–§2.6 §5 §6.2 §6.7 DECISIONS §3–§7 §9 (เวลาแก้ไข 168 ชม.) · บั๊ก B02 (ขนาด <) และ B06 (IDOR) · ออกเลขคำขอ/ใบเสร็จใน transaction เดียว · API ห้ามส่งเลขบัตรเต็ม · ทำ test hook POST /api/test/payments/<ref>/pay (CONTRACT §8) ในโมดูลนี้ · FR-07 FR-10 ลบร่าง",
+   "timeout": 4500
+  },
+  {
+   "id": "B07",
+   "title": "ฝั่งเจ้าหน้าที่/หัวหน้า: คิว รับเรื่อง ตีกลับ ส่งต่อ อนุมัติ ปิดบังเลขบัตร",
+   "size": "L",
+   "depends_on": [
+    "B03",
+    "B05"
+   ],
+   "skill": "yolo",
+   "difficulty": 4,
+   "output": "src/modules/workflow.js",
+   "done": "คิวเรียงกำหนดเสร็จ+เลขคำขอ เฉพาะแผนก · claim ซ้อนได้ 409 · งานในมือ ≤ 10 · ตีกลับ ≤ 2 ครั้ง เหตุผล ≥ 10 ตัวอักษร · routing SV-01/02/03 อัตโนมัติ · SV-02/03 ต้องหัวหน้าอนุมัติ (API 403) · unmask ต้องมีเหตุผล + audit · testid CONTRACT §2.6 §2.7 §2.8 ครบ",
+   "detail": "อ่าน CONTRACT §2.6–§2.8 §4 §5 §6.3 DECISIONS §5 §9 §11 · บั๊ก B07 B08 B09 B11 B12 ตาม BUGS.md · ห้ามแก้ citizen.js (ใช้ตารางเดียวกันผ่าน DB) · FR-29 เปิด/ดาวน์โหลดไฟล์แนบตามสิทธิ์ (officer แผนกตนเองขั้นปัจจุบันหรือเคยผ่าน · head ทุกแผนก · executive/auditor/admin 403)",
+   "timeout": 4500
+  },
+  {
+   "id": "B08",
+   "title": "เอกสารดิจิทัล: ออก PDF + ลายเซ็น HMAC + /verify",
+   "size": "M",
+   "depends_on": [
+    "B03",
+    "B05"
+   ],
+   "skill": "yolo",
+   "difficulty": 3,
+   "output": "src/modules/documents.js",
+   "done": "ออก DOC-2569-xxxxxx เป็น PDF ที่มีฟิลด์ครบตาม DECISIONS §10 + QR ไป /verify/<รหัส 8 ตัว> · /verify แสดง เอกสารถูกต้อง/เอกสารหมดอายุ/ลายเซ็นไม่ถูกต้อง/ไม่พบเอกสาร (404) · ชื่อปิดบัง",
+   "detail": "อ่าน CONTRACT §2.13 §6.4 §7 DECISIONS §10 · ปุ่มออกเอกสารที่หน้า /officer/cases เรียก API ของโมดูลนี้ (ไม่แก้ workflow.js) · ฟอนต์ไทยฝังใน PDF · ทำ test hook POST /api/test/documents/<docNo>/tamper (CONTRACT §8) ในโมดูลนี้ · ประชาชนดาวน์โหลด PDF ของตัวเอง (FR-17)",
+   "timeout": 3000
+  },
+  {
+   "id": "B09",
+   "title": "แจ้งเตือน SLA + ยกเลิกอัตโนมัติ (ประเมินทุก request)",
+   "size": "M",
+   "depends_on": [
+    "B03",
+    "B05"
+   ],
+   "skill": "yolo",
+   "difficulty": 4,
+   "output": "src/modules/notifications.js",
+   "done": "middleware ประเมินทุก request ยกเว้น /api/test/* · ใกล้ครบกำหนด → ผู้รับเรื่อง (ไม่มีผู้รับ = ทั้งแผนก) · เกินกำหนด → ผู้รับ + หัวหน้า · 1 ครั้งต่อระดับต่อคำขอต่อคน · ชุดแจ้งเตือนตรง TEST-DATA §8 · /notifications testid §2.12",
+   "detail": "อ่าน CONTRACT §0 ข้อ 7 §2.12 DECISIONS §8 §9 TEST-DATA §8 · ยกเลิกคำขอ NEED_FIX ที่เลย 168 ชม. (A-46)",
+   "timeout": 3000
+  },
+  {
+   "id": "B10",
+   "title": "Dashboard + ส่งออก Excel/PDF",
+   "size": "M",
+   "depends_on": [
+    "B03",
+    "B05"
+   ],
+   "skill": "review",
+   "difficulty": 4,
+   "output": "src/modules/dashboard.js",
+   "done": "ตัวเลขเริ่มต้นตรง TEST-DATA §7.1 ทุกช่อง · ย้อนหลัง พ.ย./ต.ค./รายปีตรง §7.3 · ทันกำหนด % = ทันกำหนด ÷ ปิดงาน (ไม่มีปิดงาน = –) · ไฟล์ส่งออกตัวเลขเท่าหน้าจอ ไม่มีข้อมูลส่วนบุคคล · ผู้ตรวจ (agy) reset แล้วเทียบตัวเลขทุกช่องกับ TEST-DATA §7 แล้วตอบ APPROVED",
+   "detail": "อ่าน CONTRACT §2.9 §6.4 §7 DECISIONS §12 §18 TEST-DATA §7 · บั๊ก B10 · ตรวจตัวเลขเองด้วยการ reset แล้วเรียก API เทียบตาราง §7 ก่อนจบ",
+   "worker": "yolo",
+   "max_rounds": 2,
+   "timeout": 3000
+  },
+  {
+   "id": "B11",
+   "title": "Audit Trail + ผู้ดูแลระบบ (บริการ วันหยุด ผู้ใช้)",
+   "size": "M",
+   "depends_on": [
+    "B03",
+    "B05"
+   ],
+   "skill": "yolo",
+   "difficulty": 3,
+   "output": "src/modules/audit-admin.js",
+   "done": "/audit กรองเหตุการณ์/ช่วงวันที่เวลาไทย ส่งออกได้ · แก้/ลบ audit = 405 · /admin/services /admin/holidays /admin/users ทำงานตามช่วงค่าที่ยอมรับ · testid §2.10 §2.11 ครบ",
+   "detail": "อ่าน CONTRACT §2.10 §2.11 §6.4 §6.5 §6.8 DECISIONS §1 §13 · helper writeAudit() อยู่ใน app/src/lib/audit.js ที่บล็อก B01 สร้าง ถ้ายังไม่มีให้สร้างในไฟล์ของบล็อกนี้และ export",
+   "timeout": 3000
+  },
+  {
+   "id": "B12",
+   "title": "Playwright ชุด 1: AUTH FEE SUBMIT UPLOAD PAY QUEUE SLA NOTI (22 TC)",
+   "size": "L",
+   "depends_on": [],
+   "skill": "ayolo",
+   "difficulty": 3,
+   "output": "e2e/part1.spec.ts",
+   "done": "มี test ครบ 22 TC (TC-AUTH-01..04 FEE-01 SUBMIT-01..03 UPLOAD-01..02 PAY-01..04 QUEUE-01..03 SLA-01..03 NOTI-01..02) ชื่อ test ขึ้นต้นด้วยรหัส TC · npx playwright test --list ผ่าน · playwright.config.ts + e2e/helpers.ts (reset แล้วล็อกอินใหม่ · ตั้งนาฬิกา)",
+   "detail": "อ่านได้เฉพาะ TEST-PLAN CONTRACT TEST-DATA ห้ามอ่านโค้ดเว็บ · ค่าที่ assert ลอกจาก TEST-PLAN ตรงตัว · เปิด video/trace สำหรับ GIF · baseURL จาก env BASE_URL",
+   "timeout": 4500
+  },
+  {
+   "id": "B13",
+   "title": "Playwright ชุด 2: WORKFLOW DOC PDPA DASH AUDIT RBAC NFR (29 TC)",
+   "size": "L",
+   "depends_on": [],
+   "skill": "ayolo",
+   "difficulty": 3,
+   "output": "e2e/part2.spec.ts",
+   "done": "มี test ครบ 29 TC (WORKFLOW-01..06 DOC-01..03 PDPA-01..03 DASH-01..04 AUDIT-01..03 RBAC-01..06 NFR-01..04) ชื่อ test ขึ้นต้นด้วยรหัส TC · npx playwright test --list ผ่าน",
+   "detail": "อ่านได้เฉพาะ TEST-PLAN CONTRACT TEST-DATA ห้ามอ่านโค้ดเว็บ · ใช้ e2e/helpers.ts ของบล็อก B12 ถ้ามีแล้ว ถ้ายังไม่มีให้เขียน helper ไว้ใน e2e/part2.helpers.ts (ห้ามเขียนทับไฟล์ของบล็อก B12) · NFR-02 ใช้ @axe-core/playwright",
+   "timeout": 4500
+  },
+  {
+   "id": "B14",
+   "title": "รวมระบบ + รัน 51 TC + BUG_MODE B01–B12",
+   "size": "L",
+   "depends_on": [
+    "B02",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "B12",
+    "B13"
+   ],
+   "skill": "yolo",
+   "difficulty": 5,
+   "output": "TEST-REPORT.md",
+   "done": "BUG_MODE ว่าง: 51/51 ผ่าน · เปิด B01–B12 ทีละตัว: TC ที่ BUGS.md ระบุล้ม ที่เหลือผ่าน · TEST-REPORT.md มีผลทุก TC + ตาราง BUG-HUNT ตาม BUGS.md §4 + triage ข้อที่ไม่ตรง (เว็บผิด/test ผิด/โจทย์ผิด)",
+   "detail": "รัน node --test test/rules.test.js ก่อน · แก้โค้ดเว็บได้ทุกไฟล์ แต่ห้ามแก้ค่าที่คาดหวังใน test ให้ตรงหน้าจอ ถ้าสงสัยว่า test ผิดให้เทียบกับ TEST-PLAN แล้วจดเหตุผล · ห้ามแก้ไฟล์ใน /workspace/egov-brief",
+   "exclusive": true,
+   "timeout": 7200
+  }
+ ]
+}
