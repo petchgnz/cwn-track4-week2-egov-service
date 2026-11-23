@@ -24,7 +24,7 @@ const hooks = require('./lib/hooks');
 const bugmode = require('./lib/bugmode');
 const reset = require('./lib/reset');
 
-const PORT = Number(process.env.PORT || 3000);
+const PORT = Number(process.env.PORT || 3005);
 const TEST_MODE = bugmode.isTestMode();
 const BODY_LIMIT = process.env.BODY_LIMIT || '12mb';
 

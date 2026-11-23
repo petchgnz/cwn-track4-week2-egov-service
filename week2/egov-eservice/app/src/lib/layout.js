@@ -114,15 +114,18 @@ function bellCount(user) {
 
 function header(req) {
   const user = req && req.user;
+  const curPath = (req && (req.path || (req.originalUrl || '').split('?')[0])) || '';
   let navHtml = '';
   let whoHtml = '';
   if (user) {
-    const items = NAV.filter((n) => n.roles.includes(user.role)).map(
-      (n) => `<li><a data-testid="${n.testid}" href="${n.href}">${esc(n.label)}</a></li>`
-    );
+    const items = NAV.filter((n) => n.roles.includes(user.role)).map((n) => {
+      const active = curPath === n.href || (n.href !== '/citizen' && curPath.startsWith(n.href + '/'));
+      return `<li><a data-testid="${n.testid}" href="${n.href}"${active ? ' class="on" aria-current="page"' : ''}>${esc(n.label)}</a></li>`;
+    });
     if (['officer', 'head'].includes(user.role)) {
+      const bellActive = curPath === '/notifications';
       items.push(
-        `<li><a data-testid="nav-bell" href="/notifications" class="bell"><span aria-hidden="true">🔔</span> แจ้งเตือน <span data-testid="bell-count" class="count">${bellCount(user)}</span></a></li>`
+        `<li><a data-testid="nav-bell" href="/notifications" class="bell${bellActive ? ' on' : ''}"${bellActive ? ' aria-current="page"' : ''}><span aria-hidden="true">🔔</span> แจ้งเตือน <span data-testid="bell-count" class="count">${bellCount(user)}</span></a></li>`
       );
     }
     navHtml = `<nav class="app-nav" aria-label="เมนูหลัก"><ul>${items.join('')}</ul></nav>`;
@@ -132,10 +135,13 @@ function header(req) {
       <span data-testid="user-role" class="user-role" data-role="${esc(user.role)}"${deptAttr}>${esc(ROLE_TH[user.role] || user.role)}</span>
       <form method="post" action="/logout" class="logout-form"><button type="submit" data-testid="logout-btn" class="btn btn-ghost">ออกจากระบบ</button></form>
     </div>`;
+  } else if (process.env.TEST_MODE === '1') {
+    whoHtml = `<div class="who"><a href="/verify" style="font-size:15px;font-weight:500">ตรวจสอบเอกสารราชการ</a><span class="test-pill">โหมดทดสอบ</span></div>`;
   }
+  const emblem = `<svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#0B5CAD"></circle><path d="M11 17h18M12 28h16M13 17v9M18 17v9M22 17v9M27 17v9M10 31h20M20 9l10 6H10z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"></path></svg>`;
   return `<header data-testid="app-header" class="app-header">
   <div class="container header-inner">
-    <a class="brand" href="/">e-Service เทศบาลนครตัวอย่าง <small>(ระบบสมมติ)</small></a>
+    <a class="brand" href="/">${emblem}<span class="brand-text"><strong>e-Service กลาง</strong><small>เทศบาลนครตัวอย่าง (ระบบสมมติ)</small></span></a>
     ${navHtml}
     ${whoHtml}
   </div>

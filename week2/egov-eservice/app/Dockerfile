@@ -3,7 +3,7 @@ FROM node:20-bookworm-slim
 
 ENV NODE_ENV=production \
     TZ=Asia/Bangkok \
-    PORT=3000 \
+    PORT=3005 \
     DB_PATH=/data/egov.db
 
 # build tools only in case the better-sqlite3 prebuilt binary cannot be downloaded
@@ -20,9 +20,9 @@ COPY src ./src
 
 RUN mkdir -p /data
 VOLUME ["/data"]
-EXPOSE 3000
+EXPOSE 3005
 
 HEALTHCHECK --interval=10s --timeout=3s --start-period=10s --retries=5 \
-  CMD node -e "require('http').get('http://127.0.0.1:'+(process.env.PORT||3000)+'/api/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
+  CMD node -e "require('http').get('http://127.0.0.1:'+(process.env.PORT||3005)+'/api/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
 
 CMD ["node", "src/server.js"]

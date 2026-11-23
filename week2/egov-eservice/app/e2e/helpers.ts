@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as zlib from 'zlib';
 
-export const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+export const BASE_URL = process.env.BASE_URL || 'http://localhost:3005';
 export const TESTFILES_DIR = path.resolve(__dirname, '..', 'testfiles');
 
 export type ReqTarget = Page | BrowserContext | APIRequestContext;

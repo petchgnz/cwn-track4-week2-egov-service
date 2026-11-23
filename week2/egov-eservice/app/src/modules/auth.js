@@ -309,17 +309,29 @@ module.exports = {
 
     // ---------------------------------------------------------- pages
     const PAGE_HEAD = `<style>
+.auth-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 40px; align-items: start; padding: 16px 0; }
+.auth-hero { min-width: 0; display: flex; flex-direction: column; gap: 24px; padding-top: 16px; }
+.auth-eyebrow { margin: 0; font-size: 15px; font-weight: 600; color: #0B5CAD; }
+.auth-hero h1 { margin: 0; font-size: 36px; line-height: 1.25; font-weight: 700; color: #13202B; }
+.auth-lead { margin: 0; font-size: 18px; line-height: 1.6; color: #3D4853; max-width: 480px; }
+.feature-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.feature-list li { display: flex; gap: 14px; align-items: flex-start; }
+.feature-ico { flex: none; width: 40px; height: 40px; border-radius: 10px; background: #E3EEF9; display: flex; align-items: center; justify-content: center; }
+.feature-copy { display: flex; flex-direction: column; gap: 2px; }
+.auth-card { width: 100%; min-width: 0; background: #FFFFFF; border: 1px solid #DCE2E8; border-radius: 16px; padding: 28px; box-shadow: 0 8px 24px rgba(19,32,43,0.06); }
 .auth-wrap { max-width: 560px; margin: 0 auto; }
-.tabs { display: flex; gap: 4px; border-bottom: 2px solid #1d3557; margin: 0 0 16px; flex-wrap: wrap; }
-.tabs a { padding: 8px 14px; border: 1px solid #9ca3af; border-bottom: none; border-radius: 6px 6px 0 0; text-decoration: none; color: #1d3557; background: #f3f4f6; }
-.tabs a[aria-selected="true"] { background: #1d3557; color: #fff; border-color: #1d3557; font-weight: 600; }
+.tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; background: #EDF1F4; border-radius: 10px; margin: 0 0 20px; }
+.tabs a { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 6px 12px; border-radius: 8px; text-decoration: none; color: #3D4853; font-weight: 600; font-size: 15px; }
+.tabs a[aria-selected="true"] { background: #FFFFFF; color: #0B5CAD; box-shadow: 0 1px 3px rgba(19,32,43,0.15); }
 .auth-panel[hidden] { display: none; }
 .auth-panel form { margin: 0 0 12px; }
-.auth-panel button { margin-top: 12px; }
-.otp-step { border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 8px; }
-.lock-box { background: #fde8e8; border: 1px solid #f5b5b5; color: #8a1111; border-radius: 6px; padding: 10px 14px; margin: 12px 0; }
-.hint { color: #4b5563; font-size: 0.925rem; margin: 4px 0; }
-input[readonly] { background: #f3f4f6; }
+.auth-panel button { margin-top: 14px; width: 100%; }
+.info-banner { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #F3F7FB; border-radius: 10px; border: 1px solid #D7E4F1; margin-bottom: 14px; font-size: 15px; color: #13202B; }
+.otp-step { border-top: 1px solid #DCE2E8; margin-top: 18px; padding-top: 14px; }
+.lock-box { background: #FBE9E7; border: 1px solid #E8B4AE; color: #7E1D16; border-radius: 10px; padding: 14px 16px; margin: 14px 0; }
+.hint { color: #56616C; font-size: 14px; margin: 4px 0; }
+@media (max-width: 860px) { .auth-split { grid-template-columns: 1fr; gap: 24px; } .auth-hero { padding-top: 0; } }
+@media (max-width: 600px) { .auth-hero h1 { font-size: 28px; } .auth-card { padding: 20px; } }
 </style>`;
 
     const TAB_SCRIPT = `(function(){
@@ -365,19 +377,42 @@ input[readonly] { background: #f3f4f6; }
 </div>`
         : '';
 
-      const body = `<div class="auth-wrap">
-<h1>เข้าสู่ระบบ e-Service</h1>
+      const body = `<div class="auth-split">
+<section class="auth-hero">
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <p class="auth-eyebrow">บริการออนไลน์ตลอด 24 ชั่วโมง</p>
+    <h1>ติดต่อเทศบาลได้<br>โดยไม่ต้องเดินทาง</h1>
+    <p class="auth-lead">ยื่นคำขอ แนบเอกสาร ชำระค่าธรรมเนียม และติดตามสถานะได้จากที่บ้าน</p>
+  </div>
+  <ul class="feature-list">
+    <li>
+      <span class="feature-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B5CAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M9 14h6M9 18h4"></path></svg></span>
+      <span class="feature-copy"><strong>3 บริการ</strong><span class="help">หนังสือรับรอง · ประกอบกิจการ · ก่อสร้าง/ต่อเติมอาคาร</span></span>
+    </li>
+    <li>
+      <span class="feature-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B5CAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"></path></svg></span>
+      <span class="feature-copy"><strong>ชำระด้วย PromptPay QR</strong><span class="help">ได้เลขคำขอและใบเสร็จทันทีเมื่อชำระสำเร็จ</span></span>
+    </li>
+    <li>
+      <span class="feature-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B5CAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg></span>
+      <span class="feature-copy"><strong>ข้อมูลส่วนบุคคลเข้ารหัสตาม PDPA</strong><span class="help">เจ้าหน้าที่เห็นเลขบัตรแบบปิดบังเท่านั้น</span></span>
+    </li>
+  </ul>
+</section>
+
+<div class="auth-card">
+<h2 style="margin:0 0 18px;font-size:24px">เข้าสู่ระบบ e-Service</h2>
 <div class="tabs" role="tablist" aria-label="ประเภทผู้ใช้">
   <a href="/login" role="tab" id="tab-citizen" data-panel="panel-citizen" data-testid="login-tab-citizen" aria-controls="panel-citizen" aria-selected="${cit}" tabindex="${cit ? 0 : -1}">ประชาชน (ThaiD)</a>
   <a href="/login?tab=staff" role="tab" id="tab-staff" data-panel="panel-staff" data-testid="login-tab-staff" aria-controls="panel-staff" aria-selected="${!cit}" tabindex="${cit ? -1 : 0}">เจ้าหน้าที่ (SSO)</a>
 </div>
 
-<section id="panel-citizen" class="auth-panel card" role="tabpanel" aria-labelledby="tab-citizen"${cit ? '' : ' hidden'}>
-  <h2>ประชาชน · ThaiD (จำลอง)</h2>
+<section id="panel-citizen" class="auth-panel" role="tabpanel" aria-labelledby="tab-citizen"${cit ? '' : ' hidden'}>
+  <div class="info-banner"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0B5CAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="12" r="2.5"></circle><path d="M14 10h4M14 14h3"></path></svg><span>ประชาชน · ยืนยันตัวตนด้วย <strong>ThaiD (จำลอง)</strong></span></div>
   <form method="post" action="/login" novalidate>
     <input type="hidden" name="action" value="thaid-start">
     <label for="thaid-id-input">เลขบัตรประจำตัวประชาชน 13 หลัก</label>
-    <input type="text" id="thaid-id-input" name="idNo" data-testid="thaid-id-input" inputmode="numeric" autocomplete="off" value="${idVal}"${focusId ? ' autofocus' : ''}${state.thaidError ? ' aria-invalid="true" aria-describedby="thaid-error"' : ''}>
+    <input type="text" id="thaid-id-input" name="idNo" data-testid="thaid-id-input" inputmode="numeric" autocomplete="off" value="${idVal}" placeholder="เช่น 1101700123456"${focusId ? ' autofocus' : ''}${state.thaidError ? ' aria-invalid="true" aria-describedby="thaid-error"' : ''}>
     ${state.thaidError ? `<p id="thaid-error" data-testid="thaid-error" class="field-error" role="alert">${esc(L.ERRORS.INVALID_ID)}</p>` : ''}
     <div><button type="submit" data-testid="thaid-submit">เข้าสู่ระบบด้วย ThaiD (จำลอง)</button></div>
   </form>
@@ -385,18 +420,19 @@ input[readonly] { background: #f3f4f6; }
   ${otpHtml}
 </section>
 
-<section id="panel-staff" class="auth-panel card" role="tabpanel" aria-labelledby="tab-staff"${cit ? ' hidden' : ''}>
-  <h2>เจ้าหน้าที่ · SSO ภาครัฐ (จำลอง)</h2>
+<section id="panel-staff" class="auth-panel" role="tabpanel" aria-labelledby="tab-staff"${cit ? ' hidden' : ''}>
+  <div class="info-banner"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0B5CAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"></path></svg><span>เจ้าหน้าที่ · SSO ภาครัฐ (จำลอง)</span></div>
   <form method="post" action="/login" novalidate>
     <input type="hidden" name="action" value="staff">
     <label for="staff-username">ชื่อผู้ใช้</label>
-    <input type="text" id="staff-username" name="username" data-testid="staff-username" autocomplete="username" value="${esc(state.staffUsername || '')}"${!cit ? ' autofocus' : ''}>
+    <input type="text" id="staff-username" name="username" data-testid="staff-username" autocomplete="username" placeholder="เช่น off.reg1" value="${esc(state.staffUsername || '')}"${!cit ? ' autofocus' : ''}>
     <label for="staff-password">รหัสผ่าน</label>
     <input type="password" id="staff-password" name="password" data-testid="staff-password" autocomplete="current-password">
     ${state.staffError ? `<p data-testid="staff-error" class="field-error" role="alert">${esc(L.ERRORS.INVALID_CREDENTIALS)}</p>` : ''}
     <div><button type="submit" data-testid="staff-submit">เข้าสู่ระบบเจ้าหน้าที่ (SSO ภาครัฐ จำลอง)</button></div>
   </form>
 </section>
+</div>
 </div>`;
       return L.render(req, res, { status, title: 'เข้าสู่ระบบ', body, head: PAGE_HEAD, scripts: [{ inline: TAB_SCRIPT }] });
     }

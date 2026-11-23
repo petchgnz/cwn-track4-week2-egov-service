@@ -106,7 +106,7 @@ function resolveBaseUrl(req) {
     const host = req.get('host');
     if (host) return `${req.protocol || 'http'}://${host}`;
   }
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 3005;
   return `http://localhost:${port}`;
 }
 
